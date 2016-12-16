@@ -8,6 +8,9 @@ var minifycss = require('gulp-minify-css');
 // Images
 var imagemin = require('gulp-imagemin');
 
+// JS
+var uglify = require('gulp-uglify');
+
 // HTML
 var htmlmin = require('gulp-htmlmin');
 
@@ -41,6 +44,7 @@ gulp.task('html', function() {
 
 gulp.task('js', function() {
   return gulp.src('src/*.js')
+    .pipe(uglify())
     .pipe(gulp.dest('dist'));
 });
 
