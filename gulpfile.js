@@ -17,9 +17,10 @@ var htmlmin = require('gulp-htmlmin');
 // compile all your css
 gulp.task('css', function (){
   gulp.src(['src/*.css'])
-    .pipe(prefix(
-      "last 1 version", "> 1%"
-      ))
+    .pipe(prefix({
+      browsers: ["last 1 version", "> 1%"],
+      remove: false
+    }))
     .pipe(minifycss())
     .pipe(gulp.dest('dist/'));
 });
