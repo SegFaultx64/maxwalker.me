@@ -3,4 +3,13 @@ services:
   web:
     build: .
     ports:
+     - "8081:80"
+  ssl:
+    image: smashwilson/lets-nginx
+    ports:
      - "80:80"
+     - "443:443"
+    environment:
+     - EMAIL=max@windrush.io
+     - DOMAIN=maxwalker.me
+     - UPSTREAM=web:80

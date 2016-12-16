@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "gulp"
+    "build": "gulp",
+    "deploy": "npm run build &&  docker-compose -f docker-compose.prod.yaml build && docker-compose -f docker-compose.prod.yaml up -d"
   },
   "author": "",
   "license": "PRIVATE",
