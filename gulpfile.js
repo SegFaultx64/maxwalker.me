@@ -3,7 +3,7 @@ var gulp = require('gulp');
 
 // Sass/CSS stuff
 var prefix = require('gulp-autoprefixer');
-var minifycss = require('gulp-minify-css');
+var minifycss = require('gulp-clean-css');
 
 // Images
 var imagemin = require('gulp-imagemin');
@@ -13,22 +13,20 @@ var uglify = require('gulp-uglify');
 
 // HTML
 var htmlmin = require('gulp-htmlmin');
+var cachebust = require('gulp-cache-bust');
 
 // compile all your css
 gulp.task('css', function (){
-  gulp.src(['src/*.css'])
-    .pipe(prefix({
-      browsers: ["last 1 version", "> 1%"],
-      remove: false
-    }))
-    .pipe(minifycss())
+  return gulp.src(['src/*.css'])
+    .pipe(prefix())
+    .pipe(minifycss({ compatibility: 'ie8' }))
     .pipe(gulp.dest('dist/'));
 });
 
 
 // Images
 gulp.task('imagemin', function () {
-  gulp.src('src/img/**/*')
+  return gulp.src('src/img/**/*')
   .pipe(imagemin({progressive: true, verbose: true}))
   .pipe(gulp.dest('dist/img'));
 });
@@ -37,6 +35,7 @@ gulp.task('imagemin', function () {
 
 gulp.task('html', function() {
   return gulp.src('src/*.html')
+    .pipe(cachebust({}))
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('dist'));
 });
@@ -49,6 +48,4 @@ gulp.task('js', function() {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('default', ['css', 'imagemin', 'html', 'js'], function(){
-
-});
+gulp.task('default', gulp.series('css', 'imagemin', 'html', 'js'));
