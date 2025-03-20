@@ -65,10 +65,10 @@ export default function AboutPage() {
                 
                 <div className="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                   <Link 
-                    href="/contact" 
+                    href="/blog" 
                     className="radical-border px-8 py-3 font-mono uppercase tracking-wider text-sm bg-radical-light dark:bg-radical-dark text-radical-primary-light dark:text-radical-primary-DEFAULT hover:bg-radical-primary-light/10 dark:hover:bg-radical-primary-DEFAULT/10 transition-colors duration-300"
                   >
-                    Work with me
+                    Read my blog
                   </Link>
                 </div>
               </div>
@@ -237,10 +237,10 @@ export default function AboutPage() {
                 </p>
               </div>
               <Link 
-                href="/contact" 
+                href="/blog" 
                 className="radical-border px-6 py-3 font-mono uppercase tracking-wider text-sm bg-radical-light dark:bg-radical-dark text-radical-primary-light dark:text-radical-primary-DEFAULT hover:bg-radical-primary-light/10 dark:hover:bg-radical-primary-DEFAULT/10 transition-colors duration-300"
               >
-                Get in touch
+                Explore my blog
               </Link>
             </div>
           </section>

@@ -1,22 +1,33 @@
 'use client';
 
-import { useTheme } from './theme-provider';
 import { useEffect, useState } from 'react';
 
 export default function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [isHovering, setIsHovering] = useState(false);
 
   // Ensure component is mounted to avoid hydration mismatch
   useEffect(() => {
     setMounted(true);
+    // Check if dark mode is set in user preferences or localStorage
+    const isDark = document.documentElement.classList.contains('dark');
+    setIsDarkMode(isDark);
+  }, []);
+
+  const toggleTheme = () => {
+    // Toggle between dark and light mode
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
     
-    // Ensure dark theme is set as default
-    if (theme !== 'dark') {
-      setTheme('dark');
+    if (newMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     }
-  }, [theme, setTheme]);
+  };
 
   if (!mounted) {
     return null;
@@ -24,18 +35,18 @@ export default function ThemeToggle() {
 
   return (
     <button
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      onClick={toggleTheme}
       className="relative w-14 h-14 flex items-center justify-center overflow-hidden industrial-border group"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       aria-label="Toggle theme"
     >
-      <div className="absolute inset-0 radical-grid opacity-30 z-0 group-hover:opacity-50 transition-opacity"></div>
+      <div className="absolute inset-0 radical-grid-light dark:radical-grid opacity-30 z-0 group-hover:opacity-50 transition-opacity"></div>
       
       {/* Sun icon */}
-      <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${theme === 'dark' ? 'opacity-0' : 'opacity-100'}`}>
+      <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${isDarkMode ? 'opacity-0' : 'opacity-100'}`}>
         <svg 
-          className="w-6 h-6 text-radical-dark" 
+          className="w-6 h-6 text-radical-primary-light" 
           xmlns="http://www.w3.org/2000/svg" 
           fill="none" 
           viewBox="0 0 24 24" 
@@ -51,7 +62,7 @@ export default function ThemeToggle() {
       </div>
       
       {/* Moon icon */}
-      <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${theme === 'light' ? 'opacity-0' : 'opacity-100'}`}>
+      <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${isDarkMode ? 'opacity-100' : 'opacity-0'}`}>
         <svg 
           className="w-6 h-6 text-radical-primary-DEFAULT animate-pulse-slow" 
           xmlns="http://www.w3.org/2000/svg" 
@@ -74,10 +85,10 @@ export default function ThemeToggle() {
       {/* Overlay effects when hovering */}
       {isHovering && (
         <>
-          <div className={`absolute top-0 left-0 w-full h-0.5 bg-radical-primary-DEFAULT opacity-80 animate-glitch-horizontal`}></div>
-          <div className={`absolute bottom-0 left-0 w-full h-0.5 bg-radical-primary-DEFAULT opacity-80 animate-glitch-horizontal`}></div>
-          <div className={`absolute top-0 left-0 w-0.5 h-full bg-radical-primary-DEFAULT opacity-80 animate-glitch-vertical`}></div>
-          <div className={`absolute top-0 right-0 w-0.5 h-full bg-radical-primary-DEFAULT opacity-80 animate-glitch-vertical`}></div>
+          <div className={`absolute top-0 left-0 w-full h-0.5 bg-radical-primary-light dark:bg-radical-primary-DEFAULT opacity-80 animate-glitch-horizontal`}></div>
+          <div className={`absolute bottom-0 left-0 w-full h-0.5 bg-radical-primary-light dark:bg-radical-primary-DEFAULT opacity-80 animate-glitch-horizontal`}></div>
+          <div className={`absolute top-0 left-0 w-0.5 h-full bg-radical-primary-light dark:bg-radical-primary-DEFAULT opacity-80 animate-glitch-vertical`}></div>
+          <div className={`absolute top-0 right-0 w-0.5 h-full bg-radical-primary-light dark:bg-radical-primary-DEFAULT opacity-80 animate-glitch-vertical`}></div>
         </>
       )}
     </button>

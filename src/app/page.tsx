@@ -27,16 +27,16 @@ export default function Home() {
                 
                 <div className="mt-10 md:mt-16 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                   <Link 
-                    href="/contact" 
+                    href="/about" 
                     className="radical-border px-8 py-3 font-mono uppercase tracking-wider text-sm bg-radical-primary-light/10 dark:bg-radical-dark text-radical-primary-light dark:text-radical-primary-DEFAULT hover:bg-radical-primary-light/20 dark:hover:bg-radical-primary-DEFAULT/10 transition-colors duration-300"
                   >
-                    Work with me
+                    About me
                   </Link>
                   <Link 
-                    href="/about" 
+                    href="/blog" 
                     className="px-8 py-3 font-mono uppercase tracking-wider text-sm border border-radical-dark/30 dark:border-radical-light/30 hover:border-radical-primary-light dark:hover:border-radical-primary-DEFAULT hover:bg-radical-primary-light/5 dark:hover:bg-radical-primary-DEFAULT/5 transition-colors duration-300"
                   >
-                    Learn more
+                    Read my blog
                   </Link>
                 </div>
               </div>
@@ -187,9 +187,9 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <blockquote className="font-display text-2xl md:text-3xl lg:text-4xl text-radical-dark dark:text-radical-light italic">
-              <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">&quot;</span>
+              <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">&#8220;</span>
               My experience in startups and technical expertise make me the perfect advisor to help founders get their companies off the ground.
-              <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">&quot;</span>
+              <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">&#8221;</span>
             </blockquote>
             <div className="mt-6 inline-flex items-center">
               <div className="h-px w-8 bg-radical-primary-light dark:bg-radical-primary-DEFAULT mr-4"></div>
@@ -218,10 +218,10 @@ export default function Home() {
                   </p>
                   <div className="mt-10 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                     <Link 
-                      href="/contact" 
+                      href="/about" 
                       className="radical-border inline-flex items-center px-8 py-3 font-mono uppercase tracking-wider text-sm bg-radical-primary-light/10 dark:bg-radical-dark text-radical-primary-light dark:text-radical-primary-DEFAULT hover:bg-radical-primary-light/20 dark:hover:bg-radical-primary-DEFAULT/10 transition-colors duration-300"
                     >
-                      Get in touch
+                      Learn more
                       <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>

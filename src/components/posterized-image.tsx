@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { useTheme } from './theme-provider';
 
 type PosterizedImageProps = {
   src: string;
@@ -31,9 +30,25 @@ export default function PosterizedImage({
 }: PosterizedImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const { theme } = useTheme();
-  const isDarkTheme = theme === 'dark';
+  const [isDarkMode, setIsDarkMode] = useState(true);
   
+  useEffect(() => {
+    // Check if dark mode is active
+    setIsDarkMode(document.documentElement.classList.contains('dark'));
+    
+    // Listen for changes to the dark mode class
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDarkMode(document.documentElement.classList.contains('dark'));
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { attributes: true });
+    
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div 
@@ -54,10 +69,10 @@ export default function PosterizedImage({
           }`}
           style={{ 
             objectPosition,
-            filter: isDarkTheme 
+            filter: isDarkMode 
               ? 'contrast(1) brightness(1.5) invert(1)' 
               : 'contrast(1.2) brightness(1)',
-            mixBlendMode: isDarkTheme ? 'screen' : 'multiply'
+            mixBlendMode: isDarkMode ? 'screen' : 'unset'
           }}
           onLoad={() => setIsLoaded(true)}
           priority={priority}

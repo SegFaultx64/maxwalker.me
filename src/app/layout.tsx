@@ -1,7 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Space_Grotesk, IM_Fell_English_SC, Rajdhani, Space_Mono } from 'next/font/google';
-import { ThemeProvider } from '../components/theme-provider';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 
@@ -44,16 +43,35 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${spaceGrotesk.variable} ${spaceMono.variable} ${unifraktur.variable} ${rajdhani.variable} font-sans bg-radical-dark text-radical-light min-h-screen`}>
-        <ThemeProvider defaultTheme="dark">
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
-          </div>
-        </ThemeProvider>
+      <head>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            // Immediately apply the correct theme to avoid flash of wrong theme
+            (function() {
+              const storedTheme = localStorage.getItem('theme');
+              
+              if (storedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+              } else {
+                // Default to dark mode regardless of system preference
+                document.documentElement.classList.add('dark');
+                // Only set in localStorage if explicitly chosen (not on first visit)
+                if (storedTheme === 'dark') {
+                  localStorage.setItem('theme', 'dark');
+                }
+              }
+            })();
+          `
+        }} />
+      </head>
+      <body className={`${spaceGrotesk.variable} ${spaceMono.variable} ${unifraktur.variable} ${rajdhani.variable} font-sans bg-white text-radical-dark dark:bg-radical-dark dark:text-radical-light min-h-screen`}>
+        <div className="flex flex-col min-h-screen">
+          <Navbar />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
