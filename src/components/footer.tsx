@@ -4,26 +4,26 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-radical-light dark:bg-radical-dark border-t border-radical-primary-light/20 dark:border-radical-primary-DEFAULT/20 pt-16 pb-8">
-      <div className="absolute inset-0 radical-grid-light dark:radical-grid opacity-30 pointer-events-none"></div>
+    <footer className="bg-radical-dark border-t border-radical-primary-DEFAULT/20 pt-16 pb-8 relative">
+      <div className="absolute inset-0 radical-grid opacity-30 pointer-events-none cyberpunk-grid"></div>
       
       <div className="container mx-auto px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
             <div>
               <div className="flex items-center space-x-2 mb-6">
-                <div className="relative w-10 h-10 border border-radical-primary-light dark:border-radical-primary-DEFAULT flex items-center justify-center overflow-hidden">
-                  <div className="absolute inset-0 radical-grid-light dark:radical-grid opacity-30"></div>
-                  <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT font-mono text-xl font-bold z-10">M</span>
-                  <div className="absolute inset-0 bg-radical-primary-light/10 dark:bg-radical-primary-DEFAULT/10"></div>
+                <div className="relative w-10 h-10 border border-radical-primary-DEFAULT flex items-center justify-center overflow-hidden industrial-border">
+                  <div className="absolute inset-0 radical-grid opacity-30"></div>
+                  <span className="text-radical-primary-DEFAULT font-tech text-xl font-bold z-10">M</span>
+                  <div className="absolute inset-0 bg-radical-primary-DEFAULT/10"></div>
                 </div>
                 <div>
-                  <span className="font-display text-xl tracking-tight text-radical-dark dark:text-radical-light">Maxwell Walker</span>
-                  <span className="font-mono text-xs text-radical-primary-light dark:text-radical-primary-DEFAULT block">{"// startup engineer"}</span>
+                  <span className="gothic-title text-xl tracking-tight text-radical-light">MAXWELL WALKER</span>
+                  <span className="font-mono text-xs text-radical-primary-DEFAULT block">{"// FORGIVE_YOURSELF"}</span>
                 </div>
               </div>
               
-              <p className="font-mono text-sm text-radical-dark/60 dark:text-radical-light/60 mb-6">
+              <p className="font-mono text-sm text-radical-light/60 mb-6 distressed">
                 Helping founders build and scale revolutionary products through high-impact engineering solutions.
               </p>
               
@@ -32,7 +32,7 @@ export default function Footer() {
                   href="https://twitter.com/maxwjwalk" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center border border-radical-primary-light/30 dark:border-radical-primary-DEFAULT/30 text-radical-primary-light dark:text-radical-primary-DEFAULT hover:bg-radical-primary-light/10 dark:hover:bg-radical-primary-DEFAULT/10 transition-colors"
+                  className="w-10 h-10 flex items-center justify-center border border-radical-primary-DEFAULT/30 text-radical-primary-DEFAULT hover:bg-radical-primary-DEFAULT/10 transition-colors"
                   aria-label="Twitter"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -43,7 +43,7 @@ export default function Footer() {
                   href="https://linkedin.com/in/maxwellwalker" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center border border-radical-primary-light/30 dark:border-radical-primary-DEFAULT/30 text-radical-primary-light dark:text-radical-primary-DEFAULT hover:bg-radical-primary-light/10 dark:hover:bg-radical-primary-DEFAULT/10 transition-colors"
+                  className="w-10 h-10 flex items-center justify-center border border-radical-primary-DEFAULT/30 text-radical-primary-DEFAULT hover:bg-radical-primary-DEFAULT/10 transition-colors"
                   aria-label="LinkedIn"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -54,7 +54,7 @@ export default function Footer() {
                   href="https://github.com/mw" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center border border-radical-primary-light/30 dark:border-radical-primary-DEFAULT/30 text-radical-primary-light dark:text-radical-primary-DEFAULT hover:bg-radical-primary-light/10 dark:hover:bg-radical-primary-DEFAULT/10 transition-colors"
+                  className="w-10 h-10 flex items-center justify-center border border-radical-primary-DEFAULT/30 text-radical-primary-DEFAULT hover:bg-radical-primary-DEFAULT/10 transition-colors"
                   aria-label="GitHub"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -65,20 +65,20 @@ export default function Footer() {
             </div>
             
             <div>
-              <h3 className="font-display text-lg text-radical-dark dark:text-radical-light mb-6">Navigation</h3>
+              <h3 className="gothic-title text-lg text-radical-light mb-6">NAVIGATION</h3>
               <ul className="space-y-3">
                 {[
-                  { label: 'Home', href: '/' },
-                  { label: 'About', href: '/about' },
-                  { label: 'Blog', href: '/blog' },
-                  { label: 'Contact', href: '/contact' },
-                ].map((link) => (
+                  { label: 'HOME', href: '/' },
+                  { label: 'ABOUT', href: '/about' },
+                  { label: 'BLOG', href: '/blog' },
+                  { label: 'CONTACT', href: '/contact' },
+                ].map((link, index) => (
                   <li key={link.href}>
                     <Link 
                       href={link.href}
-                      className="font-mono text-sm text-radical-dark/60 dark:text-radical-light/60 hover:text-radical-primary-light dark:hover:text-radical-primary-DEFAULT transition-colors"
+                      className="tech-text text-sm text-radical-light/60 hover:text-radical-primary-DEFAULT transition-colors"
                     >
-                      <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">&gt;</span> {link.label}
+                      <span className="num-tag mr-2">0{index + 1}</span> {link.label}
                     </Link>
                   </li>
                 ))}
@@ -86,22 +86,22 @@ export default function Footer() {
             </div>
             
             <div>
-              <h3 className="font-display text-lg text-radical-dark dark:text-radical-light mb-6">Get in Touch</h3>
+              <h3 className="gothic-title text-lg text-radical-light mb-6">GET IN TOUCH</h3>
               <ul className="space-y-3">
-                <li className="font-mono text-sm text-radical-dark/60 dark:text-radical-light/60">
-                  <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">@</span> maxwjwalk@gmail.com
+                <li className="font-mono text-sm text-radical-light/60">
+                  <span className="text-radical-primary-DEFAULT">@</span> maxwjwalk@gmail.com
                 </li>
-                <li className="font-mono text-sm text-radical-dark/60 dark:text-radical-light/60">
-                  <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">#</span> Remote / San Francisco
+                <li className="font-mono text-sm text-radical-light/60">
+                  <span className="text-radical-primary-DEFAULT">#</span> Remote / San Francisco
                 </li>
               </ul>
               
               <div className="mt-6">
                 <Link 
                   href="/contact"
-                  className="radical-border py-2 px-4 font-mono text-sm text-radical-primary-light dark:text-radical-primary-DEFAULT inline-flex items-center hover:bg-radical-primary-light/10 dark:hover:bg-radical-primary-DEFAULT/10 transition-colors"
+                  className="industrial-border py-2 px-4 tech-text text-sm text-radical-primary-DEFAULT inline-flex items-center hover:bg-radical-primary-DEFAULT/10 transition-colors"
                 >
-                  Let&apos;s collaborate
+                  COLLABORATE
                   <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
@@ -110,20 +110,20 @@ export default function Footer() {
             </div>
           </div>
           
-          <div className="border-t border-radical-primary-light/10 dark:border-radical-primary-DEFAULT/10 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <div className="font-mono text-xs text-radical-dark/40 dark:text-radical-light/40 mb-4 md:mb-0">
-              &copy; {currentYear} Maxwell Walker. All rights reserved.
+          <div className="border-t border-radical-primary-DEFAULT/10 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <div className="font-mono text-xs text-radical-light/40 mb-4 md:mb-0">
+              &copy; {currentYear} MAXWELL WALKER. ALL RIGHTS RESERVED.
             </div>
             
             <div className="flex space-x-6">
-              <Link href="/privacy" className="font-mono text-xs text-radical-dark/60 dark:text-radical-light/60 hover:text-radical-primary-light dark:hover:text-radical-primary-DEFAULT transition-colors">
-                Privacy
+              <Link href="/privacy" className="font-mono text-xs text-radical-light/60 hover:text-radical-primary-DEFAULT transition-colors">
+                PRIVACY
               </Link>
-              <Link href="/terms" className="font-mono text-xs text-radical-dark/60 dark:text-radical-light/60 hover:text-radical-primary-light dark:hover:text-radical-primary-DEFAULT transition-colors">
-                Terms
+              <Link href="/terms" className="font-mono text-xs text-radical-light/60 hover:text-radical-primary-DEFAULT transition-colors">
+                TERMS
               </Link>
-              <Link href="/sitemap" className="font-mono text-xs text-radical-dark/60 dark:text-radical-light/60 hover:text-radical-primary-light dark:hover:text-radical-primary-DEFAULT transition-colors">
-                Sitemap
+              <Link href="/sitemap" className="font-mono text-xs text-radical-light/60 hover:text-radical-primary-DEFAULT transition-colors">
+                SITEMAP
               </Link>
             </div>
           </div>

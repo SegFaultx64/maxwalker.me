@@ -12,40 +12,39 @@ const config: Config = {
       colors: {
         radical: {
           primary: {
-            DEFAULT: "#00f5d4", // Bright cyan for primary actions/highlights in dark mode
-            light: "#008f7a", // Darker cyan for light mode to improve contrast
+            DEFAULT: "#00f5d4", // Bright cyan for primary actions/highlights
+            light: "#008f7a", // Darker cyan for contrast
           },
           secondary: {
-            DEFAULT: "#f765a3", // Pink for secondary elements in dark mode
-            light: "#d13d7b", // Darker pink for light mode
+            DEFAULT: "#f765a3", // Pink for secondary elements
+            light: "#d13d7b", // Darker pink
           },
-          dark: "#121212", // Dark background
-          darker: "#090909", // Even darker background
-          light: "#fff9f2", // Light background with slight warmth
+          dark: "#0a0a0a", // Darker background
+          darker: "#050505", // Even darker background
+          light: "#f0f0f0", // Light text color
           muted: {
-            DEFAULT: "#6c6c6c", // Muted text for dark mode
-            light: "#8a8a8a", // Lighter muted text for light mode
+            DEFAULT: "#666666", // Muted text
+            light: "#888888", // Lighter muted text
           },
+          red: "#ff3333", // Accent red
+          blue: "#3366ff", // Accent blue
+          green: "#33ff66", // Accent green
         },
       },
       fontFamily: {
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
         display: ["var(--font-display)"],
-        gothic: ["var(--font-gothic)"],
+        tech: ["var(--font-tech)"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "noise": "url('/noise.png')",
-        "grid": {
-          DEFAULT: "url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\' width=\'32\' height=\'32\' fill=\'none\' stroke=\'%2300f5d4\' stroke-opacity=\'0.2\'%3E%3Cpath d=\'M0 .5H31.5V32\'/%3E%3C/svg%3E')",
-          light: "url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 32 32\' width=\'32\' height=\'32\' fill=\'none\' stroke=\'%23008f7a\' stroke-opacity=\'0.2\'%3E%3Cpath d=\'M0 .5H31.5V32\'/%3E%3C/svg%3E')",
-        },
-        "dots": {
-          DEFAULT: "url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%2300f5d4\' fill-opacity=\'0.2\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'1\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'1\'/%3E%3C/g%3E%3C/svg%3E')",
-          light: "url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23008f7a\' fill-opacity=\'0.2\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'1\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'1\'/%3E%3C/g%3E%3C/svg%3E')",
-        },
+        grid: "url('data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 32 32\\' width=\\'32\\' height=\\'32\\' fill=\\'none\\' stroke=\\'%2300f5d4\\' stroke-opacity=\\'0.2\\'%3E%3Cpath d=\\'M0 .5H31.5V32\\'/%3E%3C/svg%3E')",
+        "grid-light": "url('data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 32 32\\' width=\\'32\\' height=\\'32\\' fill=\\'none\\' stroke=\\'%23008f7a\\' stroke-opacity=\\'0.2\\'%3E%3Cpath d=\\'M0 .5H31.5V32\\'/%3E%3C/svg%3E')",
+        dots: "url('data:image/svg+xml,%3Csvg width=\\'20\\' height=\\'20\\' viewBox=\\'0 0 20 20\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cg fill=\\'%2300f5d4\\' fill-opacity=\\'0.2\\' fill-rule=\\'evenodd\\'%3E%3Ccircle cx=\\'3\\' cy=\\'3\\' r=\\'1\\'/%3E%3Ccircle cx=\\'13\\' cy=\\'13\\' r=\\'1\\'/%3E%3C/g%3E%3C/svg%3E')",
+        "dots-light": "url('data:image/svg+xml,%3Csvg width=\\'20\\' height=\\'20\\' viewBox=\\'0 0 20 20\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cg fill=\\'%23008f7a\\' fill-opacity=\\'0.2\\' fill-rule=\\'evenodd\\'%3E%3Ccircle cx=\\'3\\' cy=\\'3\\' r=\\'1\\'/%3E%3Ccircle cx=\\'13\\' cy=\\'13\\' r=\\'1\\'/%3E%3C/g%3E%3C/svg%3E')",
       },
       animation: {
         "float": "float 6s ease-in-out infinite",
@@ -180,22 +179,22 @@ const config: Config = {
           'color': 'transparent',
         },
         '.radical-grid': {
-          'background-image': theme('backgroundImage.grid.DEFAULT'),
+          'background-image': theme('backgroundImage.grid'),
           'background-size': '30px 30px',
           'background-position': 'fixed',
         },
         '.radical-grid-light': {
-          'background-image': theme('backgroundImage.grid.light'),
+          'background-image': theme('backgroundImage.grid-light'),
           'background-size': '30px 30px',
           'background-position': 'fixed',
         },
         '.radical-dots': {
-          'background-image': theme('backgroundImage.dots.DEFAULT'),
+          'background-image': theme('backgroundImage.dots'),
           'background-size': '20px 20px',
           'background-position': 'fixed',
         },
         '.radical-dots-light': {
-          'background-image': theme('backgroundImage.dots.light'),
+          'background-image': theme('backgroundImage.dots-light'),
           'background-size': '20px 20px',
           'background-position': 'fixed',
         },
@@ -281,6 +280,59 @@ const config: Config = {
         '.no-scrollbar': {
           '-ms-overflow-style': 'none',
           'scrollbar-width': 'none',
+        },
+
+        // New utilities for gothic/industrial style
+        '.gothic-title': {
+          'font-family': 'var(--font-display)',
+          'text-transform': 'uppercase',
+          'letter-spacing': '0.05em',
+        },
+        '.tech-text': {
+          'font-family': 'var(--font-tech)',
+          'letter-spacing': '0.03em',
+          'font-weight': '600',
+        },
+        '.distressed': {
+          'position': 'relative',
+          'text-shadow': '1px 1px 2px rgba(0, 0, 0, 0.3)',
+          'filter': 'saturate(0.8) contrast(1.2)',
+        },
+        '.industrial-border': {
+          'border': '1px solid rgba(255, 255, 255, 0.2)',
+          'position': 'relative',
+        },
+        '.industrial-border::before': {
+          'content': '""',
+          'position': 'absolute',
+          'inset': '-2px',
+          'border': '1px solid rgba(255, 255, 255, 0.05)',
+          'z-index': '-1',
+        },
+        '.num-tag': {
+          'font-family': 'var(--font-mono)',
+          'font-size': '0.7em',
+          'padding': '0.1em 0.3em',
+          'background-color': 'rgba(0, 245, 212, 0.1)',
+          'color': theme('colors.radical.primary.DEFAULT'),
+          'border': '1px solid ' + theme('colors.radical.primary.DEFAULT'),
+        },
+        '.redacted': {
+          'position': 'relative',
+        },
+        '.redacted::after': {
+          'content': '""',
+          'position': 'absolute',
+          'left': '0',
+          'right': '0',
+          'top': '50%',
+          'height': '1px',
+          'background-color': 'currentColor',
+          'opacity': '0.7',
+        },
+        '.cyberpunk-grid': {
+          'background-image': 'linear-gradient(rgba(0, 245, 212, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 245, 212, 0.1) 1px, transparent 1px)',
+          'background-size': '20px 20px',
         },
       }
       addUtilities(newUtilities)
