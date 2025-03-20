@@ -3,14 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-  --font-display: 'Fraunces', Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-display: 'UnifrakturMaguntia', 'Old English Text MT', 'Blackletter', serif;
+  --font-gothic: 'Cinzel Decorative', 'Blackletter', serif;
 }
 
 /* Only basic resets - no component styling in CSS */
 html {
   scroll-behavior: smooth;
+}
+
+/* Gothic/industrial text styles for headings */
+h1, h2, h3, .heading-gothic {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 /* Just the keyframes for animations that will be referenced in the Tailwind config */
@@ -37,4 +44,23 @@ html {
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
+}
+
+/* Additional classes for gothic/industrial design elements */
+.gothic-title {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.cinzel-title {
+  font-family: var(--font-gothic);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.industrial-text {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 700;
 }

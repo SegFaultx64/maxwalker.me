@@ -32,6 +32,7 @@ const config: Config = {
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
         display: ["var(--font-display)"],
+        gothic: ["var(--font-gothic)"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
