@@ -16,16 +16,16 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
   // Countries grouped by region
   const [countriesByRegion, setCountriesByRegion] = useState<Record<string, CountryInfo[]>>({});
   const [visitedCountriesList] = useState<CountryInfo[]>([
-    { code: 'CA', region: 'North America' }, // Canada
-    { code: 'MX', region: 'North America' }, // Mexico
-    { code: 'US', region: 'North America' }, // United States
-    { code: 'TC', region: 'North America' }, // Turks and Caicos
+    { code: 'CA', region: 'Americas' }, // Canada
+    { code: 'MX', region: 'Americas' }, // Mexico
+    { code: 'US', region: 'Americas' }, // United States
+    { code: 'TC', region: 'Americas' }, // Turks and Caicos
     
-    { code: 'CO', region: 'South America' }, // Colombia
-    { code: 'AR', region: 'South America' }, // Argentina
-    { code: 'PE', region: 'South America' }, // Peru
-    { code: 'UY', region: 'South America' }, // Uruguay
-    { code: 'CL', region: 'South America' }, // Chile
+    { code: 'CO', region: 'Americas' }, // Colombia
+    { code: 'AR', region: 'Americas' }, // Argentina
+    { code: 'PE', region: 'Americas' }, // Peru
+    { code: 'UY', region: 'Americas' }, // Uruguay
+    { code: 'CL', region: 'Americas' }, // Chile
     
     { code: 'GB', region: 'Europe' }, // United Kingdom
     { code: 'IE', region: 'Europe' }, // Ireland
@@ -53,20 +53,20 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
     { code: 'HU', region: 'Europe' }, // Hungary
     { code: 'GE', region: 'Europe' }, // Georgia
     
-    { code: 'TR', region: 'Middle East' }, // Turkey
-    { code: 'AE', region: 'Middle East' }, // United Arab Emirates
-    { code: 'MA', region: 'Africa' }, // Morocco
-    { code: 'KE', region: 'Africa' }, // Kenya
+    { code: 'TR', region: 'Middle East & Africa' }, // Turkey
+    { code: 'AE', region: 'Middle East & Africa' }, // United Arab Emirates
+    { code: 'MA', region: 'Middle East & Africa' }, // Morocco
+    { code: 'KE', region: 'Middle East & Africa' }, // Kenya
     
-    { code: 'ID', region: 'Asia Pacific' }, // Indonesia
-    { code: 'VN', region: 'Asia Pacific' }, // Vietnam
-    { code: 'LA', region: 'Asia Pacific' }, // Laos
-    { code: 'KH', region: 'Asia Pacific' }, // Cambodia
-    { code: 'SG', region: 'Asia Pacific' }, // Singapore
-    { code: 'TW', region: 'Asia Pacific' }, // Taiwan
-    { code: 'JP', region: 'Asia Pacific' }, // Japan
-    { code: 'KR', region: 'Asia Pacific' }, // South Korea
-    { code: 'NZ', region: 'Asia Pacific' }, // New Zealand
+    { code: 'ID', region: 'Asia/Pacific' }, // Indonesia
+    { code: 'VN', region: 'Asia/Pacific' }, // Vietnam
+    { code: 'LA', region: 'Asia/Pacific' }, // Laos
+    { code: 'KH', region: 'Asia/Pacific' }, // Cambodia
+    { code: 'SG', region: 'Asia/Pacific' }, // Singapore
+    { code: 'TW', region: 'Asia/Pacific' }, // Taiwan
+    { code: 'JP', region: 'Asia/Pacific' }, // Japan
+    { code: 'KR', region: 'Asia/Pacific' }, // South Korea
+    { code: 'NZ', region: 'Asia/Pacific' }, // New Zealand
   ]);
 
   const [dimensions, setDimensions] = useState({ width: 600, height: 600 });
@@ -86,13 +86,10 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
     // Sort regions
     const orderedRegions: Record<string, CountryInfo[]> = {};
     const regionOrder = [
-      'North America', 
-      'Caribbean', 
-      'South America', 
-      'Europe', 
-      'Africa', 
-      'Middle East', 
-      'Asia Pacific'
+      'Americas',
+      'Europe',
+      'Middle East & Africa',
+      'Asia/Pacific',
     ];
     
     regionOrder.forEach(region => {
