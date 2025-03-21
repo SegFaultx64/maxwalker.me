@@ -38,8 +38,9 @@ export default function Navbar() {
               <div className="absolute inset-0 bg-radical-primary-light/10 dark:bg-radical-primary-DEFAULT/10 group-hover:bg-radical-primary-light/20 dark:group-hover:bg-radical-primary-DEFAULT/20 transition-colors"></div>
             </div>
             <div>
-              <span className="gothic-title text-xl tracking-tight text-radical-dark dark:text-radical-light">MAXWELL</span>
-              <span className="font-mono text-xs text-radical-primary-light dark:text-radical-primary-DEFAULT block">{"// BURIED_ALIVE"}</span>
+              <h3 className="font-display text-xl font-bold text-radical-dark dark:text-radical-light">
+                Max<span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">Walker</span>
+              </h3>
             </div>
           </Link>
           
