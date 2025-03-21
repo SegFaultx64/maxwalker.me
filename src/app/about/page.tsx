@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import PosterizedImage from '../../components/posterized-image';
-
+import GlobeDemo from '../../components/GlobeDemo';
 export default function AboutPage() {
   return (
     <div className="relative pt-24">
@@ -25,6 +25,8 @@ export default function AboutPage() {
               Founder, engineer, and startup advisor with technical expertise
             </p>
           </header>
+
+          <GlobeDemo />
 
           <section className="py-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
