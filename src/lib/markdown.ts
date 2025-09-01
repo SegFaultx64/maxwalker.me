@@ -14,7 +14,8 @@ const blogDirectory = path.join(contentDirectory, 'blog');
 
 export interface BlogPost {
   id: string;
-  title: string;
+  title: string; // full title for detail page
+  shortTitle: string; // compact title for listings
   date: string;
   excerpt: string;
   content: string;
@@ -60,6 +61,7 @@ export async function getBlogPostData(id: string): Promise<BlogPost> {
     id,
     content,
     title: matterResult.data.title,
+    shortTitle: matterResult.data.shortTitle || matterResult.data.title,
     date: matterResult.data.date,
     excerpt: matterResult.data.excerpt,
   };

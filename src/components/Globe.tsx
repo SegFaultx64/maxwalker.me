@@ -1,492 +1,563 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import GeoJsonGeometry from 'three-geojson-geometry';
 
-// We'll dynamically import OrbitControls for Next.js compatibility
 let OrbitControls: any;
 
 interface Props {
   width?: number;
   height?: number;
   backgroundColor?: string;
-  visitedCountries?: string[]; // ISO-2 letter country codes
-  focusCountry?: string | null; // Country to focus on
+  visitedCountries?: string[]; // ISO-2 codes
+  focusCountry?: string | null;
   className?: string;
 }
 
-const Globe: React.FC<Props> = ({
+type Code = string;
+
+const PINK = new THREE.Color('#f765a3');
+const TEAL = new THREE.Color('#00f5d4');
+
+function normalizeName(s: string): string {
+  return s.toLowerCase().replace(/[^a-z]+/g, ' ').trim();
+}
+
+function codeFromAdminName(adminOrName?: string): Code | null {
+  if (!adminOrName) return null;
+  const n = normalizeName(adminOrName);
+  const map: Record<string, Code> = {
+    'united states of america': 'US',
+    'united states': 'US',
+    'canada': 'CA',
+    'mexico': 'MX',
+    'turks and caicos islands': 'TC',
+    'colombia': 'CO',
+    'argentina': 'AR',
+    'peru': 'PE',
+    'uruguay': 'UY',
+    'chile': 'CL',
+    'united kingdom': 'GB',
+    'ireland': 'IE',
+    'iceland': 'IS',
+    'faroe islands': 'FO',
+    'norway': 'NO',
+    'denmark': 'DK',
+    'portugal': 'PT',
+    'spain': 'ES',
+    'france': 'FR',
+    'italy': 'IT',
+    'switzerland': 'CH',
+    'germany': 'DE',
+    'austria': 'AT',
+    'czechia': 'CZ',
+    'czech republic': 'CZ',
+    'slovenia': 'SI',
+    'croatia': 'HR',
+    'bosnia and herzegovina': 'BA',
+    'serbia': 'RS',
+    'montenegro': 'ME',
+    'albania': 'AL',
+    'north macedonia': 'MK',
+    'macedonia': 'MK',
+    'greece': 'GR',
+    'poland': 'PL',
+    'latvia': 'LV',
+    'hungary': 'HU',
+    'georgia': 'GE',
+    'turkiye': 'TR',
+    'turkey': 'TR',
+    'united arab emirates': 'AE',
+    'morocco': 'MA',
+    'kenya': 'KE',
+    'indonesia': 'ID',
+    'vietnam': 'VN',
+    'laos': 'LA',
+    'cambodia': 'KH',
+    'singapore': 'SG',
+    'taiwan': 'TW',
+    'japan': 'JP',
+    'south korea': 'KR',
+    'republic of korea': 'KR',
+    'new zealand': 'NZ',
+    'liechtenstein': 'LI',
+  };
+  return map[n] || null;
+}
+
+function iso2FromProps(props: any): Code | null {
+  if (!props) return null;
+  // Primary: dataset uses ISO3166 keys
+  const a2 = props['ISO3166-1-Alpha-2'];
+  if (a2 && typeof a2 === 'string' && String(a2).toUpperCase() !== '-99') {
+    return String(a2).toUpperCase();
+  }
+
+  const candidates = [props.ISO_A2, props.ISO2, props.iso_a2, props.WB_A2, props.wb_a2];
+  for (const c of candidates) {
+    if (c && typeof c === 'string' && c !== '-99') return String(c).toUpperCase();
+  }
+  const a3 = props['ISO3166-1-Alpha-3'] || props.ISO_A3 || props.iso_a3 || props.ADM0_A3;
+  if (a3 && String(a3).toUpperCase() !== '-99') {
+    const m: Record<string, string> = {
+      USA: 'US', CAN: 'CA', MEX: 'MX', COL: 'CO', ARG: 'AR', PER: 'PE', URY: 'UY', CHL: 'CL',
+      GBR: 'GB', IRL: 'IE', ISL: 'IS', FRO: 'FO', NOR: 'NO', DNK: 'DK', PRT: 'PT', ESP: 'ES',
+      FRA: 'FR', ITA: 'IT', CHE: 'CH', DEU: 'DE', AUT: 'AT', CZE: 'CZ', SVN: 'SI', HRV: 'HR',
+      BIH: 'BA', SRB: 'RS', MNE: 'ME', ALB: 'AL', MKD: 'MK', GRC: 'GR', POL: 'PL', LVA: 'LV',
+      HUN: 'HU', GEO: 'GE', TUR: 'TR', ARE: 'AE', MAR: 'MA', KEN: 'KE', IDN: 'ID', VNM: 'VN',
+      LAO: 'LA', KHM: 'KH', SGP: 'SG', TWN: 'TW', JPN: 'JP', KOR: 'KR', NZL: 'NZ', LIE: 'LI',
+      TCA: 'TC', CZEH: 'CZ'
+    };
+    const k = String(a3).toUpperCase();
+    if (m[k]) return m[k];
+  }
+  const byAdmin = codeFromAdminName(props.ADMIN || props.name);
+  if (byAdmin) return byAdmin;
+  return null;
+}
+
+export default function Globe({
   width = 500,
   height = 500,
   backgroundColor = 'transparent',
   visitedCountries = [],
   focusCountry = null,
   className = '',
-}) => {
+}: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const requestRef = useRef<number>();
-  const [loading, setLoading] = useState(true);
-  const [countriesData, setCountriesData] = useState<any>(null);
-  const [controlsLoaded, setControlsLoaded] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  
-  // Scene references
-  const sceneRef = useRef<THREE.Scene | null>(null);
-  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
   const controlsRef = useRef<any>(null);
-  const globeRef = useRef<THREE.Group | null>(null);
-  
-  // Store country mesh references
-  const countryLinesRef = useRef<Record<string, THREE.LineSegments>>({});
-  const countryFillsRef = useRef<Record<string, THREE.Mesh>>({});
-  const nonVisitedCountryLinesRef = useRef<Record<string, THREE.LineSegments>>({});
-  const focusCountryRef = useRef<string | null>(null);
-  
-  // Directly track current prop value without re-renders
-  const currentFocusCountryRef = useRef<string | null>(focusCountry);
-  
-  // Update ref when prop changes (without causing re-render)
-  useEffect(() => {
-    // Only update the ref, which won't cause re-renders
-    if (focusCountry !== currentFocusCountryRef.current) {
-      currentFocusCountryRef.current = focusCountry;
-      // IMPORTANT: Call applyFocusOpacity directly - the initial prop change should trigger it
-      if (!loading && countriesData) {
-        applyFocusOpacity(focusCountry);
-      }
+  const worldRef = useRef<THREE.Group | null>(null);
+  // Canvas-based fills
+  // No texture-based overlays; rely on mesh fills + borders
+
+  // maps allow multiple meshes per ISO (multi-polygons)
+  const lineByCode = useRef<Map<Code, THREE.LineSegments[]>>(new Map());
+  const fillByCode = useRef<Map<Code, THREE.Mesh[]>>(new Map());
+
+  const [data, setData] = useState<any | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  // --- Helpers to build solid fill meshes from GeoJSON on a sphere ---
+  // Match three-geojson-geometry orientation so fills align with borders
+  const toXYZ = (lonDeg: number, latDeg: number, r: number) => {
+    const lat = (latDeg * Math.PI) / 180;
+    const lon = (lonDeg * Math.PI) / 180;
+    // Equivalent to: x=r*cos(lat)*sin(lon); y=r*sin(lat); z=r*cos(lat)*cos(lon)
+    const cosLat = Math.cos(lat);
+    const sinLat = Math.sin(lat);
+    const sinLon = Math.sin(lon);
+    const cosLon = Math.cos(lon);
+    const x = r * cosLat * sinLon;
+    const y = r * sinLat;
+    const z = r * cosLat * cosLon;
+    return new THREE.Vector3(x, y, z);
+  };
+
+  // Build one geometry for a single Polygon (with holes), mapped onto sphere radius r
+  const ringArea = (ring: number[][]) => {
+    let area = 0;
+    for (let i = 0, n = ring.length; i < n; i++) {
+      const [x1, y1] = ring[i];
+      const [x2, y2] = ring[(i + 1) % n];
+      area += (x1 * y2 - x2 * y1);
     }
-  }, [focusCountry, loading, countriesData]);
+    return area / 2;
+  };
 
-  // Add direct DOM event listener for focus changes from React.memo
-  useEffect(() => {
-    if (!containerRef.current) return;
-    
-    const handleFocusChange = (event: any) => {
-      const newFocusCountry = event.detail.country;
-      if (newFocusCountry !== currentFocusCountryRef.current) {
-        currentFocusCountryRef.current = newFocusCountry;
-        applyFocusOpacity(newFocusCountry);
-      }
-    };
-    
-    containerRef.current.addEventListener('focus-country-changed', handleFocusChange);
-    
-    return () => {
-      containerRef.current?.removeEventListener('focus-country-changed', handleFocusChange);
-    };
-  }, []);
-
-  // Dynamically import OrbitControls
-  useEffect(() => {
-    import('three/addons/controls/OrbitControls.js').then(module => {
-      OrbitControls = module.OrbitControls;
-      setControlsLoaded(true);
-    }).catch(error => {
-      console.error('Failed to load OrbitControls:', error);
-      // Still allow rendering even if controls fail to load
-      setControlsLoaded(true);
-    });
-  }, []);
-
-  // Load GeoJSON data
-  useEffect(() => {
-    fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
-      .then(response => response.json())
-      .then(data => {
-        setCountriesData(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error loading GeoJSON:', error);
-        setError('Failed to load country data');
-        setLoading(false);
-      });
-  }, []);
-
-  // Helper function to apply focus opacity - purely imperative function
-  const applyFocusOpacity = (focusCode: string | null) => {
-    // Skip if it's the same country
-    if (focusCode === focusCountryRef.current) return;
-    
-    // Store new focus country
-    focusCountryRef.current = focusCode;
-
-    // Constants for opacities
-    const FOCUSED_LINE_OPACITY = 1.0;
-    const UNFOCUSED_LINE_OPACITY = 0.35;
-    const FOCUSED_FILL_OPACITY = 0.25;
-    const UNFOCUSED_FILL_OPACITY = 0.1;
-    const NONVISITED_FOCUSED_OPACITY = 1.0;
-    const NONVISITED_DIMMED_OPACITY = 0.3;  
-    const NONVISITED_DEFAULT_OPACITY = 0.7;
-    
-    // Track all Line objects that have been processed
-    const processedObjects = new Set<THREE.Object3D>();
-    
-    // Handle visited countries
-    const visitedCountryCodes = Object.keys(countryLinesRef.current);
-    visitedCountryCodes.forEach(code => {
-      const lines = countryLinesRef.current[code];
-      if (lines) {
-        processedObjects.add(lines);
-        const material = lines.material as THREE.LineBasicMaterial;
-        
-        if (focusCode === null) {
-          // No focus, show all at default opacity
-          material.opacity = FOCUSED_LINE_OPACITY;
-        } else {
-          // If this is the focused country, make it fully opaque
-          material.opacity = (code === focusCode) ? 
-            FOCUSED_LINE_OPACITY : UNFOCUSED_LINE_OPACITY;
-        }
-        
-        // Tell Three.js that the material needs updating
-        material.needsUpdate = true;
-      }
-      
-      const fill = countryFillsRef.current[code];
-      if (fill) {
-        processedObjects.add(fill);
-        const fillMaterial = fill.material as THREE.MeshBasicMaterial;
-        
-        if (focusCode === null) {
-          // No focus, show all at default fill opacity
-          fillMaterial.opacity = UNFOCUSED_FILL_OPACITY * 1.5;
-        } else {
-          // Adjust fill opacity too
-          fillMaterial.opacity = (code === focusCode) ? 
-            FOCUSED_FILL_OPACITY : UNFOCUSED_FILL_OPACITY;
-        }
-        
-        // Tell Three.js that the material needs updating
-        fillMaterial.needsUpdate = true;
-      }
-    });
-
-    // Handle non-visited countries with ISO codes
-    const nonVisitedCountryCodes = Object.keys(nonVisitedCountryLinesRef.current);
-    nonVisitedCountryCodes.forEach(code => {
-      const lines = nonVisitedCountryLinesRef.current[code];
-      if (lines) {
-        processedObjects.add(lines);
-        const material = lines.material as THREE.LineBasicMaterial;
-        
-        if (focusCode === null) {
-          // No focus, normal opacity for non-visited
-          material.opacity = NONVISITED_DEFAULT_OPACITY;
-        } else {
-          // Focus mode
-          material.opacity = (code === focusCode) ? 
-            NONVISITED_FOCUSED_OPACITY : NONVISITED_DIMMED_OPACITY;
-        }
-        
-        // Tell Three.js that the material needs updating
-        material.needsUpdate = true;
-      }
-    });
-    
-    // Handle any remaining territories or disputed areas that weren't processed above
-    // These might be in the GeoJSON but not have standard ISO codes
-    if (globeRef.current) {
-      globeRef.current.traverse((object) => {
-        if (processedObjects.has(object)) {
-          return; // Skip already processed objects
-        }
-        
-        // Check if it's a LineSegments with a material (country border)
-        if (object instanceof THREE.LineSegments && object.material) {
-          const material = object.material as THREE.LineBasicMaterial;
-          if (material.transparent) {
-            // Apply different opacity based on focus state
-            material.opacity = focusCode === null ? 
-              NONVISITED_DEFAULT_OPACITY : NONVISITED_DIMMED_OPACITY;
-            material.needsUpdate = true;
-          }
-        }
-        
-        // Check if it's a Mesh with a material (country fill)
-        if (object instanceof THREE.Mesh && object.material) {
-          const material = object.material as THREE.MeshBasicMaterial;
-          if (material.transparent) {
-            // Apply different opacity based on focus state
-            material.opacity = focusCode === null ? 
-              UNFOCUSED_FILL_OPACITY * 1.2 : UNFOCUSED_FILL_OPACITY;
-            material.needsUpdate = true;
-          }
-        }
-      });
+  const ensureOrientation = (outer: THREE.Vector2[], holes: THREE.Vector2[][]) => {
+    // THREE expects outer CCW and holes CW
+    const outerArea = ringArea(outer.map(v => [v.x, v.y]));
+    if (outerArea < 0) outer.reverse();
+    for (const h of holes) {
+      const a = ringArea(h.map(v => [v.x, v.y]));
+      if (a > 0) h.reverse();
     }
   };
 
-  // Initialize Three.js scene
-  useEffect(() => {
-    if (!containerRef.current || loading || !countriesData) return;
-
-    try {
-      // Set up scene
-      const scene = new THREE.Scene();
-      sceneRef.current = scene;
-
-      // Add ambient light so objects are visible
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-      scene.add(ambientLight);
-
-      // Add directional light
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-      directionalLight.position.set(1, 1, 1);
-      scene.add(directionalLight);
-
-      // Set up camera
-      const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
-      camera.position.z = 2;
-      cameraRef.current = camera;
-
-      // Set up renderer
-      const renderer = new THREE.WebGLRenderer({ 
-        antialias: true,
-        alpha: backgroundColor === 'transparent'
-      });
-      renderer.setSize(width, height);
-      renderer.setPixelRatio(window.devicePixelRatio);
-      if (backgroundColor !== 'transparent') {
-        renderer.setClearColor(backgroundColor);
-      } else {
-        renderer.setClearColor(0x000000, 0); // Clear with transparent background
+  const buildPolygonGeometry = (coords: number[][][], r: number) => {
+    // coords: [ outerRing[[lon,lat],...], hole1[], hole2[] ]
+    const unwrapRing = (ring: number[][]) => {
+      // unwrap longitudes to keep continuity across the antimeridian
+      if (!ring.length) return ring;
+      const out: number[][] = [];
+      let [prevLon, prevLat] = ring[0];
+      let lonUnwrapped = prevLon;
+      out.push([lonUnwrapped, prevLat]);
+      for (let i = 1; i < ring.length; i++) {
+        let [lon, lat] = ring[i];
+        // normalize delta to [-180, 180]
+        let d = lon - prevLon;
+        while (d > 180) { lon -= 360; d -= 360; }
+        while (d < -180) { lon += 360; d += 360; }
+        lonUnwrapped = (out[out.length - 1][0] + d);
+        out.push([lonUnwrapped, lat]);
+        prevLon = ring[i][0];
+        prevLat = lat;
       }
-      
-      // Clear the container
-      if (containerRef.current.firstChild) {
-        containerRef.current.removeChild(containerRef.current.firstChild);
+      return out;
+    };
+    const sanitize = (ring: number[][]) => {
+      const unwrapped = unwrapRing(ring);
+      const res: THREE.Vector2[] = [];
+      for (let i = 0; i < unwrapped.length; i++) {
+        const [lon, lat] = unwrapped[i];
+        if (i > 0) {
+          const [plon, plat] = unwrapped[i - 1];
+          if (Math.abs(lon - plon) < 1e-8 && Math.abs(lat - plat) < 1e-8) continue;
+        }
+        res.push(new THREE.Vector2(lon, lat));
       }
-      containerRef.current.appendChild(renderer.domElement);
-      rendererRef.current = renderer;
-
-      // Set up controls if available
-      if (controlsLoaded && OrbitControls) {
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.05;
-        controls.rotateSpeed = 0.5;
-        controls.minDistance = 1.5;
-        controls.maxDistance = 4;
-        controls.enableZoom = true;
-        controls.enablePan = false;
-        controls.enableRotate = true;
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 0.5;
-        controlsRef.current = controls;
+      // drop closing duplicate if present
+      if (res.length > 1) {
+        const a = res[0], b = res[res.length - 1];
+        if (Math.abs(a.x - b.x) < 1e-8 && Math.abs(a.y - b.y) < 1e-8) res.pop();
       }
+      return res;
+    };
 
-      // Create globe group
-      const globe = new THREE.Group();
-      globeRef.current = globe;
-      scene.add(globe);
+    if (!coords || !coords.length) return null;
+    const outer = sanitize(coords[0]);
+    const holes = coords.slice(1).map(sanitize);
+    if (outer.length < 3) return null;
 
-      // Add a basic sphere as fallback/reference
-      const sphereGeometry = new THREE.SphereGeometry(0.98, 32, 32);
-      const sphereMaterial = new THREE.MeshBasicMaterial({
-        color: 0x111111,
-        transparent: true,
-        opacity: 0.3,
-        wireframe: true
-      });
-      const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-      globe.add(sphere);
-
-      // Create globe mesh with countries
-      const primaryColor = new THREE.Color('#00f5d4'); // Cyan color from theme
-      const secondaryColor = new THREE.Color('#f765a3'); // Pink color from theme
-      
-      // Clear country references
-      countryLinesRef.current = {};
-      countryFillsRef.current = {};
-      nonVisitedCountryLinesRef.current = {};
-      
-      // Process each GeoJSON feature (country)
-      let featuresProcessed = 0;
-      try {
-        countriesData.features.forEach((feature: any) => {
-          try {
-            const countryCode = feature.properties.ISO_A2;
-            const isVisited = visitedCountries.includes(countryCode);
-            
-            // Create country borders - safely create geometry
-            const geometry = new GeoJsonGeometry(feature.geometry || feature, 1, 5);
-            
-            // Create borders with solid lines
-            const borderMaterial = new THREE.LineBasicMaterial({
-              color: isVisited ? secondaryColor : primaryColor,
-              linewidth: 1,
-              transparent: true,
-              opacity: 1.0,
-            });
-            
-            const countryLines = new THREE.LineSegments(geometry, borderMaterial);
-            globe.add(countryLines);
-            
-            // Store reference to country lines
-            if (isVisited) {
-              countryLinesRef.current[countryCode] = countryLines;
-            } else {
-              nonVisitedCountryLinesRef.current[countryCode] = countryLines;
-            }
-            
-            // Only add fill for visited countries
-            if (isVisited) {
-              const fillGeometry = new GeoJsonGeometry(feature.geometry || feature, 0.99, 5);
-              const fillMaterial = new THREE.MeshBasicMaterial({
-                color: secondaryColor,
-                transparent: true,
-                opacity: 0.15,
-                side: THREE.DoubleSide,
-                depthWrite: false
-              });
-              
-              const countryFill = new THREE.Mesh(fillGeometry, fillMaterial);
-              globe.add(countryFill);
-              
-              // Store reference to country fill
-              countryFillsRef.current[countryCode] = countryFill;
-            }
-            
-            featuresProcessed++;
-          } catch (err) {
-            console.error('Error processing country feature:', err);
-          }
-        });
-        
-        console.log(`Processed ${featuresProcessed} countries out of ${countriesData.features.length}`);
-      } catch (err) {
-        console.error('Error processing countries:', err);
-        setError('Error rendering country borders');
+    // Use Shape to triangulate with holes
+    // Enforce consistent winding to avoid triangulation artifacts
+    ensureOrientation(outer, holes);
+    const shape = new THREE.Shape(outer.map(v => new THREE.Vector2(v.x, v.y)));
+    for (const h of holes) {
+      if (h.length >= 3) {
+        const path = new THREE.Path(h.map(v => new THREE.Vector2(v.x, v.y)));
+        shape.holes.push(path);
       }
-
-      // Animation loop
-      const animate = () => {
-        if (!sceneRef.current || !cameraRef.current || !rendererRef.current) return;
-        
-        // Update controls if available
-        if (controlsRef.current) {
-          controlsRef.current.update();
-        }
-        
-        // Check for focus country changes during animation
-        if (currentFocusCountryRef.current !== focusCountryRef.current) {
-          applyFocusOpacity(currentFocusCountryRef.current);
-        }
-        
-        rendererRef.current.render(sceneRef.current, cameraRef.current);
-        requestRef.current = requestAnimationFrame(animate);
-      };
-      
-      // Make sure to call animate() before applying initial focus
-      animate();
-      
-      // Apply initial focus with a slight delay to ensure scene is ready
-      setTimeout(() => {
-        if (currentFocusCountryRef.current !== null) {
-          applyFocusOpacity(currentFocusCountryRef.current);
-        }
-      }, 100);
-      
-      // Cleanup
-      return () => {
-        if (requestRef.current) {
-          cancelAnimationFrame(requestRef.current);
-        }
-        
-        if (rendererRef.current && rendererRef.current.domElement && containerRef.current) {
-          containerRef.current.removeChild(rendererRef.current.domElement);
-        }
-        
-        if (controlsRef.current) {
-          controlsRef.current.dispose();
-        }
-        
-        if (rendererRef.current) {
-          rendererRef.current.dispose();
-        }
-        
-        if (globeRef.current) {
-          globeRef.current.clear();
-        }
-      };
-    } catch (err) {
-      console.error('Error setting up 3D scene:', err);
-      setError('Error setting up 3D scene');
     }
-  }, [loading, countriesData, width, height, backgroundColor, visitedCountries, controlsLoaded]);
+    const geom2D = new THREE.ShapeGeometry(shape, 1);
 
-  // Handle resizing
+    // Project 2D lon/lat vertices to sphere
+    const pos = geom2D.getAttribute('position') as THREE.BufferAttribute;
+    const arr = pos.array as Float32Array;
+    for (let i = 0; i < arr.length; i += 3) {
+      const lon = arr[i + 0];
+      const lat = arr[i + 1];
+      const v = toXYZ(lon, lat, r);
+      arr[i + 0] = v.x;
+      arr[i + 1] = v.y;
+      arr[i + 2] = v.z;
+    }
+    pos.needsUpdate = true;
+    geom2D.computeVertexNormals();
+    return geom2D;
+  };
+
+  // Build meshes for both Polygon and MultiPolygon
+  const buildFillMeshes = (g: any, r: number, material: THREE.Material) => {
+    const meshes: THREE.Mesh[] = [];
+    if (!g) return meshes;
+    if (g.type === 'Polygon') {
+      const geom = buildPolygonGeometry(g.coordinates, r);
+      if (geom) meshes.push(new THREE.Mesh(geom, material));
+    } else if (g.type === 'MultiPolygon') {
+      for (const poly of g.coordinates) {
+        const geom = buildPolygonGeometry(poly, r);
+        if (geom) meshes.push(new THREE.Mesh(geom, material));
+      }
+    }
+    return meshes;
+  };
+
+  const createHatchMaterial = (color: THREE.Color | string) => {
+    const mat = new THREE.ShaderMaterial({
+      uniforms: {
+        uColor: { value: new THREE.Color(color as any) },
+        uAlpha: { value: 0.9 },
+        uFreq: { value: 288.0 }, // 40% less dense than 480
+        uThickness: { value: 0.035 },
+        uSlant: { value: 1.0 },
+      },
+      vertexShader: `
+        varying vec3 vWorldPos;
+        void main() {
+          vec4 wp = modelMatrix * vec4(position, 1.0);
+          vWorldPos = wp.xyz;
+          gl_Position = projectionMatrix * viewMatrix * wp;
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        uniform float uAlpha;
+        uniform float uFreq;
+        uniform float uThickness;
+        uniform float uSlant;
+        varying vec3 vWorldPos;
+        float stripeAA(float s, float thickness) {
+          float d = abs(fract(s) - 0.5);
+          float w = fwidth(s);
+          return 1.0 - smoothstep(thickness*0.5, thickness*0.5 + w, d);
+        }
+        void main() {
+          vec3 n = normalize(vWorldPos);
+          float lon = atan(n.x, n.z);
+          float lat = asin(n.y);
+          float u = lon / (2.0 * 3.14159265);
+          float v = lat / 3.14159265;
+          float s1 = (u + v) * uFreq;
+          float s2 = (u - v) * uFreq;
+          float band1 = stripeAA(s1, uThickness);
+          float band2 = stripeAA(s2, uThickness);
+          float mask = max(band1, band2);
+          // Ensure tiny features still visible: add small base alpha under stripes
+          float base = 0.12;
+          float alpha = clamp(base + (1.0 - base) * mask, 0.0, 1.0) * uAlpha;
+          if (alpha < 0.02) discard;
+          gl_FragColor = vec4(uColor, alpha);
+        }
+      `,
+      transparent: true,
+      depthTest: true,
+      depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      polygonOffsetUnits: -1,
+      side: THREE.DoubleSide,
+      alphaTest: 0.01,
+    });
+    return mat;
+  };
+
+  // Controls
   useEffect(() => {
-    const handleResize = () => {
-      if (cameraRef.current && rendererRef.current && containerRef.current) {
-        cameraRef.current.aspect = width / height;
-        cameraRef.current.updateProjectionMatrix();
-        rendererRef.current.setSize(width, height);
+    import('three/addons/controls/OrbitControls.js')
+      .then(m => (OrbitControls = m.OrbitControls))
+      .catch(() => {})
+      .finally(() => {});
+  }, []);
+
+  // Load GeoJSON (client fetch)
+  useEffect(() => {
+    let mounted = true;
+    fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
+      .then(r => r.json())
+      .then(json => { if (mounted) setData(json); })
+      .catch(() => { if (mounted) setError('Failed to load country data'); });
+    return () => { mounted = false; };
+  }, []);
+
+  // Build scene
+  useEffect(() => {
+    if (!containerRef.current || !data) return;
+
+    // Cleanup prior
+    while (containerRef.current.firstChild) containerRef.current.removeChild(containerRef.current.firstChild);
+    lineByCode.current.clear();
+    fillByCode.current.clear();
+
+    const scene = new THREE.Scene();
+    sceneRef.current = scene;
+
+    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+    // Start 20% farther than before for a wider view
+    camera.position.set(0, 0, 2.4);
+    cameraRef.current = camera;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: backgroundColor === 'transparent' });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    if (backgroundColor !== 'transparent') renderer.setClearColor(new THREE.Color(backgroundColor));
+    else renderer.setClearColor(0x000000, 0);
+    containerRef.current.appendChild(renderer.domElement);
+    rendererRef.current = renderer;
+
+    const controls = OrbitControls ? new OrbitControls(camera, renderer.domElement) : null;
+    if (controls) {
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 0.5;
+      controls.minDistance = 1.5;
+      controls.maxDistance = 4;
+      controls.enablePan = false;
+      controlsRef.current = controls;
+    }
+
+    const world = new THREE.Group();
+    worldRef.current = world;
+    scene.add(world);
+
+    // Removed base wireframe sphere overlay
+
+    // Helpers to draw equirectangular fills on canvas
+    const CANVAS_W = 2048;
+    const CANVAS_H = 1024;
+    const project = (lon: number, lat: number) => {
+      const x = ((lon + 180) / 360) * CANVAS_W;
+      const y = ((90 - lat) / 180) * CANVAS_H;
+      return [x, y] as const;
+    };
+    const drawPolygonPath = (ctx: CanvasRenderingContext2D, coords: any) => {
+      // coords: [ [ [lon,lat], ... ] , [hole], ...]
+      ctx.beginPath();
+      for (const ring of coords) {
+        let first = true;
+        for (const pt of ring) {
+          const [x, y] = project(pt[0], pt[1]);
+          if (first) { ctx.moveTo(x, y); first = false; }
+          else { ctx.lineTo(x, y); }
+        }
+        ctx.closePath();
       }
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const features: any[] = data.features || [];
+    // Normalize visited list once for reliable membership checks
+    const visitedSet = new Set((visitedCountries || []).map(c => String(c).trim().toUpperCase()));
+    // Build a runtime region name → ISO2 map using Intl.DisplayNames (avoids hardcoding)
+    const regionNameToCode = new Map<string, string>();
+    try {
+      const DN: any = (Intl as any).DisplayNames ? new (Intl as any).DisplayNames(['en'], { type: 'region' }) : null;
+      if (DN && typeof DN.of === 'function') {
+        for (let i = 65; i <= 90; i++) {
+          for (let j = 65; j <= 90; j++) {
+            const code = String.fromCharCode(i) + String.fromCharCode(j);
+            const name = DN.of(code);
+            if (name && name !== code) {
+              regionNameToCode.set(normalizeName(String(name)), code);
+            }
+          }
+        }
+      }
+    } catch {}
+
+    features.forEach((f, idx) => {
+      const codeRaw = iso2FromProps(f.properties);
+      const nameGuess = regionNameToCode.get(normalizeName(f.properties?.name));
+      const code = (codeRaw ? String(codeRaw).toUpperCase() : null) || nameGuess || null;
+      const geom = new GeoJsonGeometry(f.geometry || f, 1, 5);
+
+      // Borders
+      const borderMat = new THREE.LineBasicMaterial({ color: PINK, transparent: true, opacity: 0.6 });
+      const lines = new THREE.LineSegments(geom, borderMat);
+      lines.renderOrder = 2;
+      world.add(lines);
+      const key = code || `UNK_${idx}`;
+      const existingLines = lineByCode.current.get(key) || [];
+      existingLines.push(lines);
+      lineByCode.current.set(key, existingLines);
+
+      // Explicit fill meshes with Atari-style hatch shader (per-country material)
+      if (code && visitedSet.has(code)) {
+        const g = f.geometry || f;
+        const mat = createHatchMaterial(PINK);
+        const meshes = buildFillMeshes(g, 0.999, mat);
+        const arr: THREE.Mesh[] = fillByCode.current.get(code) || [];
+        for (const mesh of meshes) {
+          mesh.renderOrder = 1; // draw under borders
+          world.add(mesh);
+          arr.push(mesh);
+        }
+        fillByCode.current.set(code, arr);
+      }
+
+      // Accumulate visited fills on a canvas texture (robust across geometry types)
+    });
+
+    // No visited overlay sphere; fills are real meshes using a hatch shader
+
+    // No highlight overlay sphere; selection indicated by border color only
+
+    // Apply initial focus
+    applyFocus(scene, focusCountry, lineByCode.current, fillByCode.current);
+
+    // Expose simple debug info for quick validation in DevTools
+    try {
+      (window as any).__globeDebug = {
+        features: features.length,
+        visitedInput: Array.from(visitedSet),
+        lineCodes: Array.from(lineByCode.current.keys()),
+        fillCodes: Array.from(fillByCode.current.keys()),
+      };
+    } catch {}
+
+    const tick = () => {
+      controlsRef.current?.update();
+      renderer.render(scene, camera);
+      requestAnimationFrame(tick);
+    };
+    tick();
+
+    return () => {
+      controlsRef.current?.dispose?.();
+      renderer.dispose();
+      world.clear();
+      scene.clear();
+    };
+  }, [data, width, height, backgroundColor, visitedCountries.join('|')]);
+
+  // Re-apply focus when it changes without rebuilding scene
+  useEffect(() => {
+    if (!sceneRef.current) return;
+    applyFocus(sceneRef.current, focusCountry, lineByCode.current, fillByCode.current);
+    // No overlay to update
+  }, [focusCountry, data]);
+
+  // Keep renderer size in sync
+  useEffect(() => {
+    if (!rendererRef.current || !cameraRef.current) return;
+    cameraRef.current.aspect = width / height;
+    cameraRef.current.updateProjectionMatrix();
+    rendererRef.current.setSize(width, height);
   }, [width, height]);
 
   return (
-    <div 
-      ref={containerRef} 
-      className={`relative globe-container ${className}`} 
-      style={{ width, height }}
-    >
-      {(loading) && (
-        <div className="absolute inset-0 flex items-center justify-center text-radical-primary">
-          Loading Globe...
-        </div>
-      )}
+    <div ref={containerRef} className={`relative ${className}`} style={{ width, height }}>
       {error && (
-        <div className="absolute inset-0 flex items-center justify-center text-radical-primary bg-radical-darker bg-opacity-70">
+        <div className="absolute inset-0 grid place-items-center text-radical-primary bg-black/60">
           {error}
         </div>
       )}
     </div>
   );
-};
+}
 
-// Use React.memo to prevent unnecessary re-renders when props change
-export default React.memo(Globe, (prevProps, nextProps) => {
-  // FIXED: We need to explicitly check if focusCountry changed to actually pass it to the component
-  // While avoiding full re-renders that reset rotation
-  const focusCountryChanged = prevProps.focusCountry !== nextProps.focusCountry;
-  
-  if (focusCountryChanged) {
-    // Hack: directly update the focusCountry ref from here
-    // This avoids the need for a full re-render
-    if (typeof window !== 'undefined') {
-      // Use setTimeout to ensure this runs after the current execution
-      setTimeout(() => {
-        // Find the active Globe component instance and force update its refs
-        const activeGlobe = document.querySelector('.globe-container');
-        if (activeGlobe) {
-          // This is a custom event to signal the imperative update
-          const event = new CustomEvent('focus-country-changed', { 
-            detail: { country: nextProps.focusCountry }
-          });
-          activeGlobe.dispatchEvent(event);
-        }
-      }, 0);
-    }
+function applyFocus(
+  scene: THREE.Scene,
+  focus: string | null,
+  lineByCode: Map<Code, THREE.LineSegments[]>,
+  fillByCode: Map<Code, THREE.Mesh[]>
+) {
+  let focusCode = focus ? String(focus).trim().toUpperCase() : null;
+  if (focusCode && !lineByCode.has(focusCode)) {
+    // If the focus code doesn't exist in lines, treat as no focus
+    focusCode = null;
   }
-  
-  // NOTE: We still don't re-render on focusCountry changes
-  // because we're handling them imperatively
-  return (
-    prevProps.width === nextProps.width &&
-    prevProps.height === nextProps.height &&
-    prevProps.backgroundColor === nextProps.backgroundColor &&
-    prevProps.className === nextProps.className &&
-    // IMPORTANT: Don't re-render for focusCountry changes!
-    // We handle those imperatively in the animation loop and event system
-    JSON.stringify(prevProps.visitedCountries) === JSON.stringify(nextProps.visitedCountries)
-  );
-}); 
+  const BASE_LINE = 0.6;
+  const FOCUS_LINE = 1.0; // brighter selected line
+
+  // Lines
+  for (const [code, arr] of lineByCode.entries()) {
+    arr.forEach(l => {
+      const m = l.material as THREE.LineBasicMaterial;
+      const isFocus = !!focusCode && code === focusCode;
+      m.color = new THREE.Color(isFocus ? '#00f5d4' : PINK);
+      // Do not dim others; keep base opacity
+      m.opacity = isFocus ? FOCUS_LINE : BASE_LINE;
+      m.transparent = true;
+      m.needsUpdate = true;
+    });
+  }
+
+  // Update fill color on focus to teal
+  for (const [code, arr] of fillByCode.entries()) {
+    const isFocus = !!focusCode && code === focusCode;
+    arr.forEach(mesh => {
+      const mat: any = mesh.material;
+      if (mat && mat.isShaderMaterial && mat.uniforms && mat.uniforms.uColor) {
+        const target = isFocus ? TEAL : PINK;
+        mat.uniforms.uColor.value.copy(target);
+        mat.needsUpdate = false; // uniforms update without rebuild
+      }
+    });
+  }
+}

@@ -28,7 +28,7 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
           </div>
           
           <h3 className="font-display text-xl md:text-2xl font-bold text-radical-dark dark:text-radical-light group-hover:text-radical-primary transition-colors duration-300">
-            {post.title}
+            {post.shortTitle}
           </h3>
           
           <p className="font-mono text-sm text-radical-dark/70 dark:text-radical-light/70 line-clamp-3">

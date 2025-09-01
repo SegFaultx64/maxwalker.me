@@ -35,6 +35,7 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
     { code: 'DK', region: 'Europe' }, // Denmark
     { code: 'PT', region: 'Europe' }, // Portugal
     { code: 'ES', region: 'Europe' }, // Spain
+    { code: 'FR', region: 'Europe' }, // France
     { code: 'IT', region: 'Europe' }, // Italy
     { code: 'CH', region: 'Europe' }, // Switzerland
     { code: 'DE', region: 'Europe' }, // Germany
@@ -51,6 +52,7 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
     { code: 'PL', region: 'Europe' }, // Poland
     { code: 'LV', region: 'Europe' }, // Latvia
     { code: 'HU', region: 'Europe' }, // Hungary
+    { code: 'LI', region: 'Europe' }, // Liechtenstein
     { code: 'GE', region: 'Europe' }, // Georgia
     
     { code: 'TR', region: 'Middle East & Africa' }, // Turkey
@@ -192,7 +194,7 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
 
   return (
     <div className={`flex flex-col items-center ${className}`}>
-      <h2 className="text-xl font-display mb-4">Countries I've Visited</h2>
+      <h2 className="text-xl font-display mb-4">Where I've Visited or Lived</h2>
       <div className="border border-radical-primary p-1 rounded-lg max-w-full">
         <Globe 
           width={dimensions.width}

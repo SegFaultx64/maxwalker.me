@@ -100,13 +100,13 @@ export default function Home() {
               <div className="md:w-2/3 mt-12 md:mt-0">
                 <div className="border border-radical-primary-light/30 dark:border-radical-primary-DEFAULT/30 p-6 bg-radical-light/80 dark:bg-radical-dark/80 backdrop-blur-md mb-6">
                   <p className="font-mono text-sm text-radical-dark/90 dark:text-radical-light/90 mb-4">
-                    I&apos;m Max. I founded (and eventually sold) a startup, traveled the world, lived out of a leaky 60-year-old Airstream during a global pandemic, and lived to tell the tale. Now I help other founders avoid the mistakes I made on so they can focus on the ones I didn&apos;t.
+                    I&apos;m Max. I founded a startup, sold it, wandered the world, and spent a pandemic living out of a 60-year-old Airstream. Now I help founders dodge my mistakes so they can make original ones.
                   </p>
                   <p className="font-mono text-sm text-radical-dark/90 dark:text-radical-light/90 mb-4">
-                    By day, I build things at <a href="https://pitonlabs.com" target="_blank" rel="noopener noreferrer" className="text-radical-primary-light dark:text-radical-primary-DEFAULT hover:underline">Piton Labs</a>, helping startups find their footing. The rest of the time, I&apos;m usually planning my next adventure, falling off of embarrassingly easy climbs, or screwing around somewhere in the woods.
+                    By day, I build things at <a href="https://pitonlabs.com" target="_blank" rel="noopener noreferrer" className="text-radical-primary-light dark:text-radical-primary-DEFAULT hover:underline">Piton Labs</a>, helping startups find their footing. The rest of the time, I&apos;m usually planning the next trip, falling off embarrassingly easy climbs, or getting lost in the woods.
                   </p>
                   <p className="font-mono text-sm text-radical-dark/90 dark:text-radical-light/90">
-                    This site isn&apos;t my portfolio or my resume — it&apos;s where I dump the things I&apos;ve learned the hard way about engineering, adventure, and finding meaning in the journey.
+                    This isn&apos;t a portfolio or a resume — it&apos;s where I put the things I learned the hard way about engineering, adventure, and finding meaning in the journey.
                   </p>
                 </div>
                 
@@ -151,7 +151,7 @@ export default function Home() {
                       Kitchen Experimenter
                     </h3>
                     <p className="mt-4 font-mono text-sm text-radical-dark/70 dark:text-radical-light/70">
-                      When not coding or exploring, I&apos;m likely in the kitchen. A pretty decent cook who believes good food, like good code, benefits from both structure and creativity.
+                      When not coding or exploring, I&apos;m likely in the kitchen. Good food, like good code, benefits from both structure and creativity.
                     </p>
                   </div>
                 </div>
@@ -225,7 +225,7 @@ export default function Home() {
               <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
                 <div className="lg:col-span-2">
                   <h2 className="font-display text-4xl md:text-5xl font-bold text-radical-dark dark:text-radical-light max-w-2xl">
-                    Want to chat about <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">code, travel, or food</span>?
+                    Want to chat about <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">code, travel, or building things</span>?
                   </h2>
                   <p className="mt-6 font-mono text-sm text-radical-dark/70 dark:text-radical-light/70 max-w-xl">
                     I&apos;m always up for a conversation about technical challenges, startup ideas, Airstream renovations, or recommendations for trails and treks around the world.

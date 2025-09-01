@@ -78,10 +78,10 @@ export default function Footer() {
               <h3 className="gothic-title text-lg text-radical-dark dark:text-radical-light mb-6">GET IN TOUCH</h3>
               <ul className="space-y-3">
                 <li className="font-mono text-sm text-radical-dark/70 dark:text-radical-light/60">
-                  <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">@</span> max@maxwalker.me
+                  <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">@</span> max@maxclimbs.rocks
                 </li>
                 <li className="font-mono text-sm text-radical-dark/70 dark:text-radical-light/60">
-                  <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">#</span> Saratoga Springs, NY / Leavenworth, WA
+                  <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">#</span> Saratoga Springs, NY / Plain, WA
                 </li>
               </ul>
               
