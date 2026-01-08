@@ -17,8 +17,8 @@ interface Props {
 
 type Code = string;
 
-const PINK = new THREE.Color('#f765a3');
-const TEAL = new THREE.Color('#00f5d4');
+const BRUTAL_RED = new THREE.Color('#ff2200');
+const BRUTAL_BONE = new THREE.Color('#e8e4dc');
 
 function normalizeName(s: string): string {
   return s.toLowerCase().replace(/[^a-z]+/g, ' ').trim();
@@ -437,7 +437,7 @@ export default function Globe({
       const geom = new GeoJsonGeometry(f.geometry || f, 1, 5);
 
       // Borders
-      const borderMat = new THREE.LineBasicMaterial({ color: PINK, transparent: true, opacity: 0.6 });
+      const borderMat = new THREE.LineBasicMaterial({ color: BRUTAL_RED, transparent: true, opacity: 0.6 });
       const lines = new THREE.LineSegments(geom, borderMat);
       lines.renderOrder = 2;
       world.add(lines);
@@ -449,7 +449,7 @@ export default function Globe({
       // Explicit fill meshes with Atari-style hatch shader (per-country material)
       if (code && visitedSet.has(code)) {
         const g = f.geometry || f;
-        const mat = createHatchMaterial(PINK);
+        const mat = createHatchMaterial(BRUTAL_RED);
         const meshes = buildFillMeshes(g, 0.999, mat);
         const arr: THREE.Mesh[] = fillByCode.current.get(code) || [];
         for (const mesh of meshes) {
@@ -513,7 +513,7 @@ export default function Globe({
   return (
     <div ref={containerRef} className={`relative ${className}`} style={{ width, height }}>
       {error && (
-        <div className="absolute inset-0 grid place-items-center text-radical-primary bg-black/60">
+        <div className="absolute inset-0 grid place-items-center text-[var(--brutal-red)] bg-black/60">
           {error}
         </div>
       )}
@@ -540,7 +540,7 @@ function applyFocus(
     arr.forEach(l => {
       const m = l.material as THREE.LineBasicMaterial;
       const isFocus = !!focusCode && code === focusCode;
-      m.color = new THREE.Color(isFocus ? '#00f5d4' : PINK);
+      m.color = new THREE.Color(isFocus ? '#e8e4dc' : BRUTAL_RED);
       // Do not dim others; keep base opacity
       m.opacity = isFocus ? FOCUS_LINE : BASE_LINE;
       m.transparent = true;
@@ -554,7 +554,7 @@ function applyFocus(
     arr.forEach(mesh => {
       const mat: any = mesh.material;
       if (mat && mat.isShaderMaterial && mat.uniforms && mat.uniforms.uColor) {
-        const target = isFocus ? TEAL : PINK;
+        const target = isFocus ? BRUTAL_BONE : BRUTAL_RED;
         mat.uniforms.uColor.value.copy(target);
         mat.needsUpdate = false; // uniforms update without rebuild
       }

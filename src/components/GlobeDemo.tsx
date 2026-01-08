@@ -20,13 +20,13 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
     { code: 'MX', region: 'Americas' }, // Mexico
     { code: 'US', region: 'Americas' }, // United States
     { code: 'TC', region: 'Americas' }, // Turks and Caicos
-    
+
     { code: 'CO', region: 'Americas' }, // Colombia
     { code: 'AR', region: 'Americas' }, // Argentina
     { code: 'PE', region: 'Americas' }, // Peru
     { code: 'UY', region: 'Americas' }, // Uruguay
     { code: 'CL', region: 'Americas' }, // Chile
-    
+
     { code: 'GB', region: 'Europe' }, // United Kingdom
     { code: 'IE', region: 'Europe' }, // Ireland
     { code: 'IS', region: 'Europe' }, // Iceland
@@ -54,12 +54,12 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
     { code: 'HU', region: 'Europe' }, // Hungary
     { code: 'LI', region: 'Europe' }, // Liechtenstein
     { code: 'GE', region: 'Europe' }, // Georgia
-    
+
     { code: 'TR', region: 'Middle East & Africa' }, // Turkey
     { code: 'AE', region: 'Middle East & Africa' }, // United Arab Emirates
     { code: 'MA', region: 'Middle East & Africa' }, // Morocco
     { code: 'KE', region: 'Middle East & Africa' }, // Kenya
-    
+
     { code: 'ID', region: 'Asia/Pacific' }, // Indonesia
     { code: 'VN', region: 'Asia/Pacific' }, // Vietnam
     { code: 'LA', region: 'Asia/Pacific' }, // Laos
@@ -84,7 +84,7 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
       acc[country.region].push(country);
       return acc;
     }, {} as Record<string, CountryInfo[]>);
-    
+
     // Sort regions
     const orderedRegions: Record<string, CountryInfo[]> = {};
     const regionOrder = [
@@ -93,19 +93,19 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
       'Middle East & Africa',
       'Asia/Pacific',
     ];
-    
+
     regionOrder.forEach(region => {
       if (grouped[region]) {
         orderedRegions[region] = grouped[region].sort((a, b) => a.code.localeCompare(b.code));
       }
     });
-    
+
     setCountriesByRegion(orderedRegions);
   }, [visitedCountriesList]);
 
   useEffect(() => {
     setIsMounted(true);
-    
+
     const handleResize = () => {
       setDimensions({
         width: window.innerWidth < 768 ? 300 : 600,
@@ -115,7 +115,7 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
 
     handleResize();
     window.addEventListener('resize', handleResize);
-    
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -177,16 +177,16 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
       'KR': 'South Korea',
       'NZ': 'New Zealand',
     };
-    
+
     return countryNames[code] || code;
   };
 
   if (!isMounted) {
     return (
       <div className={`flex flex-col items-center ${className}`}>
-        <h2 className="text-xl font-display mb-4">Countries I've Visited</h2>
-        <div className="border border-radical-primary p-1 rounded-lg w-[300px] h-[300px] flex items-center justify-center">
-          <span className="text-radical-primary">Loading...</span>
+        <h2 className="font-mono text-sm uppercase tracking-widest text-[var(--brutal-bone)]/60 mb-4">Where I've Been</h2>
+        <div className="border border-[var(--brutal-bone)]/20 w-[300px] h-[300px] flex items-center justify-center">
+          <span className="text-[var(--brutal-red)] font-mono text-sm">Loading...</span>
         </div>
       </div>
     );
@@ -194,31 +194,31 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
 
   return (
     <div className={`flex flex-col items-center ${className}`}>
-      <h2 className="text-xl font-display mb-4">Where I've Visited or Lived</h2>
-      <div className="border border-radical-primary p-1 rounded-lg max-w-full">
-        <Globe 
+      <h2 className="font-mono text-sm uppercase tracking-widest text-[var(--brutal-bone)]/60 mb-4">Where I've Been</h2>
+      <div className="border border-[var(--brutal-bone)]/20 max-w-full">
+        <Globe
           width={dimensions.width}
           height={dimensions.height}
           visitedCountries={visitedCountryCodes}
           focusCountry={selectedCountry}
-          className="overflow-hidden rounded-lg bg-radical-darker"
+          className="overflow-hidden bg-black"
         />
       </div>
-      
+
       <div className="mt-6 max-w-[600px]">
         {Object.entries(countriesByRegion).map(([region, countries]) => (
           <div key={region} className="mb-4">
-            <h3 className="text-lg font-semibold mb-2">{region}</h3>
+            <h3 className="font-mono text-xs uppercase tracking-widest text-[var(--brutal-bone)]/40 mb-2">{region}</h3>
             <div className="flex flex-wrap gap-2">
               {countries.map(country => (
                 <button
                   key={country.code}
                   onClick={() => handleCountryClick(country.code)}
                   title={getCountryName(country.code)}
-                  className={`px-2 py-1 rounded-md text-sm flex items-center space-x-1 transition-colors ${
-                    selectedCountry === country.code 
-                      ? 'bg-radical-primary text-white' 
-                      : 'bg-radical-secondary hover:bg-radical-primary text-white'
+                  className={`px-2 py-1 text-sm flex items-center transition-colors border ${
+                    selectedCountry === country.code
+                      ? 'bg-[var(--brutal-red)] border-[var(--brutal-red)] text-white'
+                      : 'bg-transparent border-[var(--brutal-bone)]/20 text-[var(--brutal-bone)]/60 hover:border-[var(--brutal-red)] hover:text-[var(--brutal-red)]'
                   }`}
                 >
                   <span className="m-1">{String.fromCodePoint(...Array.from(country.code).map(c => 127397 + c.charCodeAt(0)))}</span>
@@ -232,4 +232,4 @@ const GlobeDemo: React.FC<Props> = ({ className = '' }) => {
   );
 };
 
-export default GlobeDemo; 
+export default GlobeDemo;

@@ -1,220 +1,294 @@
 import Link from 'next/link';
 import PosterizedImage from '../../components/posterized-image';
 import GlobeDemo from '../../components/GlobeDemo';
+import CrtFilters from '../../components/CrtFilters';
+
 export default function AboutPage() {
   return (
-    <div className="relative pt-24">
-      {/* Background elements */}
-      <div className="absolute inset-0 radical-grid-light dark:radical-grid opacity-30 pointer-events-none"></div>
+    <div className="relative bg-black overflow-hidden">
+      <CrtFilters />
 
-      <div className="container mx-auto px-4">
-        <div className="max-w-7xl mx-auto">
-          <header className="py-12 md:py-20 relative">
-            <div className="absolute top-0 left-0 w-12 h-12 border border-radical-primary-light/50 dark:border-radical-primary-DEFAULT/50 opacity-50"></div>
-            
-            {/* Title with glitch effect */}
-            <h1 className="radical-heading relative inline-block">
-              <span className="text-outline-light dark:text-outline text-6xl sm:text-7xl uppercase tracking-tighter">ABOUT</span>
-              <span className="absolute top-1 left-1 text-radical-primary-light dark:text-radical-primary-DEFAULT text-6xl sm:text-7xl uppercase tracking-tighter radical-glitch">ABOUT</span>
-            </h1>
-            
-            <div className="h-px w-24 bg-radical-primary-light dark:bg-radical-primary-DEFAULT my-8"></div>
-            
-            <p className="radical-subheading text-radical-dark/80 dark:text-radical-light/80 max-w-lg">
-              <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">{'// '}</span>
-              Engineer. Adventurer. Airstream renovator.
-            </p>
-          </header>
+      {/* Hero - full screen like homepage */}
+      <section className="brutal-hero brutal-scanlines relative h-screen">
+        {/* Background image (dimmed) */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url('/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_abandon_01880443-fc44-4d8f-832a-91fe0d06ad45_0.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'grayscale(100%) contrast(1.1)',
+            opacity: 0.3
+          }}
+        />
 
-          <GlobeDemo />
+        {/* Giant ABOUT text with image through */}
+        <h1
+          className="absolute inset-0 brutal-title flex items-end px-4 pb-72 md:pb-64"
+          style={{
+            backgroundImage: "url('/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_abandon_01880443-fc44-4d8f-832a-91fe0d06ad45_0.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            WebkitBackgroundClip: 'text',
+            backgroundClip: 'text',
+            color: 'transparent',
+            filter: 'grayscale(100%) contrast(1.4) brightness(1.3)',
+            WebkitTextStroke: '3px var(--brutal-bone)'
+          }}
+        >
+          <span>ABOUT</span>
+        </h1>
 
-          <section className="py-16">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              <div className="relative">
-                <div className="relative z-10">
-                  <PosterizedImage
-                    src="/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_abandon_01880443-fc44-4d8f-832a-91fe0d06ad45_0.png"
-                    alt="Maxwell Walker - Startup Engineer"
-                    className="w-full h-full"
-                    priority={true}
-                    glitchEffect={true}
-                  />
-                  <div className="absolute -top-6 -left-6 border border-radical-primary-light dark:border-radical-primary-DEFAULT w-full h-full"></div>
-                  <div className="absolute -bottom-6 -right-6 border border-radical-secondary-light dark:border-radical-secondary-DEFAULT w-full h-full"></div>
-                </div>
-                
-                <div className="absolute top-4 right-4 p-3 bg-radical-light dark:bg-radical-dark border border-radical-primary-light dark:border-radical-primary-DEFAULT z-20">
-                  <p className="font-mono text-xs uppercase tracking-wider text-radical-primary-light dark:text-radical-primary-DEFAULT">The Journey</p>
-                </div>
-              </div>
-              
-              <div>
-                <h2 className="font-display text-3xl font-bold text-radical-dark dark:text-radical-light mb-6">
-                  The <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">Story</span> So Far
-                </h2>
-                
-                <div className="space-y-6 font-mono text-sm text-radical-dark/70 dark:text-radical-light/70">
-                  <p>
-                    I founded a startup, sold it, wandered the world, and spent a pandemic living out of a 60-year-old Airstream. Now I help other founders dodge my mistakes so they can make original ones.
-                  </p>
-                  <p>
-                    By day, I build things at <a href="https://pitonlabs.com" target="_blank" rel="noopener noreferrer" className="text-radical-primary-light dark:text-radical-primary-DEFAULT hover:underline">Piton Labs</a>, helping startups find their footing. The rest of the time, I'm usually planning the next trip, falling off embarrassingly easy climbs, or getting lost in the woods.
-                  </p>
-                  <p>
-                    This isn't a portfolio or a resume — it's where I put the things I learned the hard way about engineering, adventure, and finding meaning in the journey.
-                  </p>
-                </div>
-                
-                <div className="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                  <Link 
-                    href="/blog" 
-                    className="radical-border px-8 py-3 font-mono uppercase tracking-wider text-sm bg-radical-light dark:bg-radical-dark text-radical-primary-light dark:text-radical-primary-DEFAULT hover:bg-radical-primary-light/10 dark:hover:bg-radical-primary-DEFAULT/10 transition-colors duration-300"
-                  >
-                    Read my blog
-                  </Link>
-                </div>
-              </div>
+        {/* Story content at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 px-4 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
+            <div className="max-w-lg">
+              <p className="font-mono text-sm text-[var(--brutal-bone)]/80 mb-4">
+                I founded a startup, sold it, wandered the world, and spent a pandemic living out of a 60-year-old Airstream. Now I help other founders dodge my mistakes so they can make original ones.
+              </p>
+              <p className="font-mono text-xs text-[var(--brutal-bone)]/50">
+                By day, I build things at <a href="https://pitonlabs.com" target="_blank" rel="noopener noreferrer" className="text-[var(--brutal-red)] hover:underline">Piton Labs</a>. The rest of the time, I'm planning the next trip or falling off easy climbs.
+              </p>
             </div>
-          </section>
-          
-          <section className="py-16 border-t border-radical-primary-light/30 dark:border-radical-primary-DEFAULT/30">
-            <h2 className="font-display text-3xl font-bold text-radical-dark dark:text-radical-light mb-12">
-              <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">[</span> Airstream <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">]</span> Adventures
+
+            <div className="flex flex-col md:items-end gap-2">
+              <p className="text-[var(--brutal-bone)] text-sm font-bold tracking-widest uppercase">
+                Engineer. Adventurer. Airstream renovator.
+              </p>
+              <Link
+                href="/blog"
+                className="font-mono text-sm uppercase tracking-widest text-[var(--brutal-red)] hover:text-[var(--brutal-bone)] transition-colors"
+              >
+                Read my writing →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Globe section */}
+      <section className="py-16 bg-black">
+        <GlobeDemo />
+      </section>
+
+      {/* Airstream Adventures - 2 column reversed */}
+      <section className="relative" style={{ backgroundColor: '#080808' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* Left - image */}
+          <div className="relative min-h-[50vh] md:min-h-[600px]">
+            <PosterizedImage
+              src="/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_patagon_3472e375-8150-4cbc-851c-e796be66bcec_0.png"
+              alt="Patagonia"
+              className="absolute inset-0 w-full h-full object-cover grayscale contrast-125"
+            />
+          </div>
+
+          {/* Right - text */}
+          <div className="p-4 md:p-8 lg:p-12">
+            <h2 className="text-[14vw] md:text-[5vw] font-black text-[var(--brutal-bone)] uppercase leading-[0.85] tracking-tighter mb-8" style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}>
+              AIRSTREAM<br/>ADVENTURES
             </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="radical-border p-6 bg-radical-light/80 dark:bg-radical-dark/80 backdrop-blur-md">
-                <div className="uppercase font-mono text-radical-primary-light dark:text-radical-primary-DEFAULT text-sm mb-4 tracking-widest">The Restoration</div>
-                <div className="space-y-4 font-mono text-sm text-radical-dark/70 dark:text-radical-light/70">
-                  <p>
-                    At the start of COVID, we bought a ruined 1963 Airstream Overlander—just a frame and shell after decades of neglect in an Iowa field. I bought an ebook about DIY restoration, but got as far as "lift the shell with a gantry" before realizing I might accidentally kill myself.
-                  </p>
-                  <p>
-                    We found amazing craftspeople in Ohio who did most of the work while we FaceTimed and exchanged images throughout lockdown. When it was ready, we picked it up having never towed anything before in our lives.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="radical-border p-6 bg-radical-light/80 dark:bg-radical-dark/80 backdrop-blur-md">
-                <div className="uppercase font-mono text-radical-secondary-light dark:text-radical-secondary-DEFAULT text-sm mb-4 tracking-widest">The Grand Tour</div>
-                <div className="space-y-4 font-mono text-sm text-radical-dark/70 dark:text-radical-light/70">
-                  <p>
-                    We set out on an absurdly ambitious first trip with zero experience—all the way to Wyoming and Colorado. We dragged it up forest roads in the Tetons (freaking out the rangers), and narrowly escaped both wildfires and unexpected snow in Estes Park before racing back east.
-                  </p>
-                  <p>
-                    The next spring, we embarked on an even bigger journey: 38 states, 5 Canadian provinces, with our surprisingly adaptable cat in tow. We crossed Canada the day the border reopened, fell in love with Chelan County, WA, and ended up buying acres of wild land nearby.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-          
-          <section className="py-16 border-t border-radical-primary-light/30 dark:border-radical-primary-DEFAULT/30">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+            <div className="space-y-6">
               <div>
-                <h2 className="font-display text-3xl font-bold text-radical-dark dark:text-radical-light mb-6">
-                  <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">Engineering</span> Philosophy
-                </h2>
-                
-                <div className="space-y-6 font-mono text-sm text-radical-dark/70 dark:text-radical-light/70">
-                  <p>
-                    Pragmatism above all, but that means doing what's reasonable, not just what's fastest or easiest. Everything in tech is a set of tradeoffs—the art is in picking the right ones.
-                  </p>
-                  <p>
-                    A few principles I live by:
-                  </p>
-                  <ul className="space-y-2">
-                    <li className="flex items-baseline">
-                      <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT mr-2">01.</span>
-                      Most startup code will be thrown away. Plan accordingly.
-                    </li>
-                    <li className="flex items-baseline">
-                      <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT mr-2">02.</span>
-                      Code quality matters, but code is just a tool—business impact is the goal.
-                    </li>
-                    <li className="flex items-baseline">
-                      <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT mr-2">03.</span>
-                      Know when to push through challenges, but also when to turn back.
-                    </li>
-                    <li className="flex items-baseline">
-                      <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT mr-2">04.</span>
-                      Remember you chose this path when things get tough.
-                    </li>
-                  </ul>
-                </div>
+                <h3 className="text-xl font-black text-[var(--brutal-red)] uppercase tracking-tight mb-2" style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}>The Restoration</h3>
+                <p className="font-mono text-xs text-[var(--brutal-bone)]/60">
+                  At the start of COVID, we bought a ruined 1963 Airstream Overlander—just a frame and shell after decades of neglect in an Iowa field. I bought an ebook about DIY restoration, but got as far as "lift the shell with a gantry" before realizing I might accidentally kill myself.
+                </p>
+                <p className="font-mono text-xs text-[var(--brutal-bone)]/60 mt-2">
+                  We found amazing craftspeople in Ohio who did most of the work while we FaceTimed and exchanged images throughout lockdown. When it was ready, we picked it up having never towed anything before in our lives.
+                </p>
               </div>
-              
-              <div className="relative">
-                <div className="relative z-10">
-                  <PosterizedImage
-                    src="/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_trekkin_006d7bac-0620-40e0-9c6f-d466c44f1f4d_2.png"
-                    alt="Trekking adventures"
-                    className="w-full h-full"
-                    glitchEffect={true}
-                    overlayColor="rgba(0, 245, 212, 0.1)"
-                  />
-                  <div className="absolute -top-4 -right-4 border border-radical-primary-light dark:border-radical-primary-DEFAULT w-full h-full"></div>
-                </div>
-                <div className="mt-2 font-mono text-xs text-radical-dark/40 dark:text-radical-light/40 uppercase tracking-wider">
-                  <span className="text-radical-secondary-light dark:text-radical-secondary-DEFAULT"># </span>
-                  What I've learned from mountains applies to startups
-                </div>
+
+              <div>
+                <h3 className="text-xl font-black text-[var(--brutal-bone)] uppercase tracking-tight mb-2" style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}>The Grand Tour</h3>
+                <p className="font-mono text-xs text-[var(--brutal-bone)]/60">
+                  We set out on an absurdly ambitious first trip with zero experience—all the way to Wyoming and Colorado. We dragged it up forest roads in the Tetons (freaking out the rangers), and narrowly escaped both wildfires and unexpected snow in Estes Park before racing back east.
+                </p>
+                <p className="font-mono text-xs text-[var(--brutal-bone)]/60 mt-2">
+                  The next spring, we embarked on an even bigger journey: 38 states, 5 Canadian provinces, with our surprisingly adaptable cat in tow. We crossed Canada the day the border reopened, fell in love with Chelan County, WA, and ended up buying acres of wild land nearby.
+                </p>
               </div>
             </div>
-          </section>
-          
-          <section className="py-16 border-t border-radical-primary-light/30 dark:border-radical-primary-DEFAULT/30">
-            <h2 className="font-display text-3xl font-bold text-radical-dark dark:text-radical-light mb-12">
-              <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">[</span> Lessons From The Trail <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">]</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Engineering Philosophy - 2 column */}
+      <section className="relative" style={{ backgroundColor: '#0d0d0d' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* Left - text */}
+          <div className="p-4 md:p-8 lg:p-12">
+            <h2 className="text-[12vw] md:text-[5vw] font-black text-[var(--brutal-bone)] uppercase leading-[0.85] tracking-tighter mb-6" style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}>
+              <span className="text-[var(--brutal-red)]">ENGINEERING</span><br/>PHILOSOPHY
             </h2>
-            
-            <div className="radical-border p-6 bg-radical-light/80 dark:bg-radical-dark/80 backdrop-blur-md mb-8">
-              <div className="space-y-4 font-mono text-sm text-radical-dark/90 dark:text-radical-light/90">
-                <p>
+
+            <div className="space-y-4 font-mono text-sm text-[var(--brutal-bone)]/70 mb-6">
+              <p>
+                Pragmatism above all, but that means doing what's reasonable, not just what's fastest or easiest. Everything in tech is a set of tradeoffs—the art is in picking the right ones.
+              </p>
+              <p>A few principles I live by:</p>
+            </div>
+
+            <ul className="space-y-3 font-mono text-sm text-[var(--brutal-bone)]/70">
+              <li className="flex items-baseline">
+                <span className="text-[var(--brutal-red)] mr-3 font-bold">01.</span>
+                <span>Most startup code will be thrown away. Plan accordingly.</span>
+              </li>
+              <li className="flex items-baseline">
+                <span className="text-[var(--brutal-red)] mr-3 font-bold">02.</span>
+                <span>Code quality matters, but code is just a tool—business impact is the goal.</span>
+              </li>
+              <li className="flex items-baseline">
+                <span className="text-[var(--brutal-red)] mr-3 font-bold">03.</span>
+                <span>Know when to push through challenges, but also when to turn back.</span>
+              </li>
+              <li className="flex items-baseline">
+                <span className="text-[var(--brutal-red)] mr-3 font-bold">04.</span>
+                <span>Remember you chose this path when things get tough.</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Right - image */}
+          <div className="relative min-h-[50vh] md:min-h-0">
+            <PosterizedImage
+              src="/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_trekkin_006d7bac-0620-40e0-9c6f-d466c44f1f4d_2.png"
+              alt="Trekking"
+              className="absolute inset-0 w-full h-full object-cover grayscale contrast-125"
+              glitchEffect={true}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Lessons / Quotes */}
+      <section className="relative py-12 px-4 md:px-12 overflow-hidden" style={{ backgroundColor: '#080808' }}>
+        {/* Background grid texture */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(var(--brutal-bone) 1px, transparent 1px),
+              linear-gradient(90deg, var(--brutal-bone) 1px, transparent 1px)
+            `,
+            backgroundSize: '40px 40px'
+          }}
+        />
+
+        <div className="relative grid grid-cols-1 md:grid-cols-[1fr_200px] gap-8">
+          {/* Quotes */}
+          <div className="space-y-6">
+            <div className="flex gap-4">
+              <div className="shrink-0 w-12 h-12 border border-[var(--brutal-red)] flex items-center justify-center">
+                <span className="text-[var(--brutal-red)] font-mono text-lg font-bold">01</span>
+              </div>
+              <div>
+                <h3 className="font-mono text-xs text-[var(--brutal-red)] uppercase tracking-widest mb-2">On suffering</h3>
+                <p className="font-mono text-sm text-[var(--brutal-bone)]/80 italic leading-relaxed">
                   "There are going to be times when you are not having fun, a lot of them. It's important to remember as a founder that you chose to be here and that often the things that suck in the moment will fade away but the other pieces will stay."
                 </p>
               </div>
             </div>
-          
-            <div className="radical-border p-6 bg-radical-light/80 dark:bg-radical-dark/80 backdrop-blur-md">
-              <div className="space-y-4 font-mono text-sm text-radical-dark/90 dark:text-radical-light/90">
-                <p>
+
+            <div className="h-px bg-[var(--brutal-bone)]/10 ml-16"></div>
+
+            <div className="flex gap-4">
+              <div className="shrink-0 w-12 h-12 border border-[var(--brutal-bone)]/30 flex items-center justify-center">
+                <span className="text-[var(--brutal-bone)]/50 font-mono text-lg font-bold">02</span>
+              </div>
+              <div>
+                <h3 className="font-mono text-xs text-[var(--brutal-bone)]/50 uppercase tracking-widest mb-2">On turning back</h3>
+                <p className="font-mono text-sm text-[var(--brutal-bone)]/80 italic leading-relaxed">
                   "It's very important to understand when to turn back. You can turn a slight mess into a life-threatening disaster in the mountains by pushing forward when you should have called it. The same is basically true with startups—there are times to cut and run, and you're only making it worse if you double down in these moments."
                 </p>
               </div>
             </div>
-          </section>
-          
-          {/* CTA section */}
-          <section className="py-16 mb-16 border-t border-radical-primary-light/30 dark:border-radical-primary-DEFAULT/30">
-            <div className="relative border border-radical-primary-light dark:border-radical-primary-DEFAULT p-8 md:p-12 bg-radical-primary-light/10 dark:bg-radical-dark/80 backdrop-blur-md overflow-hidden">
-              {/* Background elements */}
-              <div className="absolute -top-20 -right-20 w-64 h-64 border-2 border-radical-secondary-light/30 dark:border-radical-secondary-DEFAULT/30 rounded-full"></div>
-              <div className="absolute -bottom-16 -left-16 w-32 h-32 border border-radical-primary-light/30 dark:border-radical-primary-DEFAULT/30"></div>
-              
-              <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between">
-                <div className="space-y-4 mb-8 md:mb-0">
-                  <h2 className="font-display text-2xl font-bold text-radical-dark dark:text-radical-light">
-                    Want to talk <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT">Airstreams</span> or code?
-                  </h2>
-                  <p className="font-mono text-sm text-radical-dark/70 dark:text-radical-light/70">
-                    I'm always up for a conversation about technical challenges, startup ideas, or wherever the next adventure might lead.
-                  </p>
-                </div>
-                <Link 
-                  href="/blog" 
-                  className="radical-border inline-flex items-center px-8 py-3 font-mono uppercase tracking-wider text-sm bg-radical-light dark:bg-radical-dark text-radical-primary-light dark:text-radical-primary-DEFAULT hover:bg-radical-primary-light/10 dark:hover:bg-radical-primary-DEFAULT/10 transition-colors duration-300"
-                >
-                  Read my blog
-                  <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </Link>
-              </div>
+          </div>
+
+          {/* Right side graphic - technical diagram */}
+          <div className="hidden md:block relative">
+            <div className="sticky top-8">
+              <svg viewBox="0 0 100 120" className="w-full text-[var(--brutal-bone)]/15">
+                {/* Outer frame */}
+                <rect x="5" y="5" width="90" height="90" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+                {/* Inner circles - more mechanical/technical */}
+                <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+                <circle cx="50" cy="50" r="25" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+                <circle cx="50" cy="50" r="3" fill="currentColor"/>
+                {/* Crosshairs */}
+                <line x1="50" y1="10" x2="50" y2="90" stroke="currentColor" strokeWidth="0.3"/>
+                <line x1="10" y1="50" x2="90" y2="50" stroke="currentColor" strokeWidth="0.3"/>
+                {/* Corner marks */}
+                <line x1="5" y1="15" x2="15" y2="15" stroke="currentColor" strokeWidth="0.5"/>
+                <line x1="15" y1="5" x2="15" y2="15" stroke="currentColor" strokeWidth="0.5"/>
+                <line x1="85" y1="5" x2="85" y2="15" stroke="currentColor" strokeWidth="0.5"/>
+                <line x1="85" y1="15" x2="95" y2="15" stroke="currentColor" strokeWidth="0.5"/>
+                {/* Bottom label */}
+                <text x="50" y="110" textAnchor="middle" fill="currentColor" fontSize="5" fontFamily="monospace" letterSpacing="0.1em">FIG. 02</text>
+              </svg>
             </div>
-          </section>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* CTA */}
+      <section className="relative py-16 px-4 md:px-12 overflow-hidden" style={{ backgroundColor: '#0a0a0a' }}>
+        {/* Diagonal lines texture */}
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `repeating-linear-gradient(
+              -45deg,
+              var(--brutal-bone) 0px,
+              var(--brutal-bone) 1px,
+              transparent 1px,
+              transparent 20px
+            )`
+          }}
+        />
+
+        <div className="relative grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-8 items-center">
+          <div>
+            <div className="inline-block border border-[var(--brutal-red)] px-3 py-1 mb-6">
+              <span className="font-mono text-xs text-[var(--brutal-red)] uppercase tracking-widest">Continue reading</span>
+            </div>
+            <svg className="absolute w-0 h-0">
+              <defs>
+                <filter id="roughen">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" result="noise"/>
+                  <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+                </filter>
+              </defs>
+            </svg>
+            <h2
+              className="text-[12vw] md:text-[6vw] font-black uppercase leading-[0.8] tracking-tighter text-[var(--brutal-bone)]"
+              style={{
+                fontFamily: "Impact, 'Arial Black', sans-serif",
+                filter: 'url(#roughen)'
+              }}
+            >
+              THE<br/>BLOG
+            </h2>
+          </div>
+
+          <div className="border-l border-[var(--brutal-bone)]/10 pl-8">
+            <p className="font-mono text-sm text-[var(--brutal-bone)]/60 mb-6">
+              Thoughts on engineering, startups, and lessons learned the hard way. From technical deep-dives to trail reports.
+            </p>
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-3 group"
+            >
+              <span className="font-mono text-sm uppercase tracking-widest text-[var(--brutal-red)] group-hover:text-[var(--brutal-bone)] transition-colors">
+                View all posts
+              </span>
+              <span className="w-8 h-px bg-[var(--brutal-red)] group-hover:w-12 transition-all"></span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
-} 
+}
