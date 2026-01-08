@@ -5,67 +5,81 @@ import CrtFilters from '../components/CrtFilters';
 
 export default function Home() {
   return (
-    <div className="relative pt-24 overflow-hidden">
+    <div className="relative overflow-hidden">
       <CrtFilters />
-      {/* Hero section */}
-      <section className="min-h-[90vh] flex flex-col justify-center relative">
-        <div className="container mx-auto px-4">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              {/* Glitch effect heading */}
-              <h1 className="radical-heading mb-2 relative overflow-hidden">
-                <span className="dark:text-outline text-outline-light sm:text-7xl md:text-9xl tracking-tighter uppercase block mb-2">MAX</span>
-              </h1>
-              
-              <div className="mt-6 md:mt-10 max-w-3xl">
-                <p className="radical-subheading text-radical-dark/80 dark:text-radical-light/80">
-                  <span className="text-radical-primary-light dark:text-radical-primary-DEFAULT mr-2">&gt;</span>
-                  Engineer. Adventurer. Startup survivor. Global wanderer.
-                </p>
-                
-                <div className="mt-10 md:mt-16 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                  <Link 
-                    href="/about" 
-                    className="radical-border px-8 py-3 font-mono uppercase tracking-wider text-sm bg-radical-primary-light/10 dark:bg-radical-dark text-radical-primary-light dark:text-radical-primary-DEFAULT hover:bg-radical-primary-light/20 dark:hover:bg-radical-primary-DEFAULT/10 transition-colors duration-300"
-                  >
-                    About me
-                  </Link>
-                  <Link 
-                    href="/blog" 
-                    className="px-8 py-3 font-mono uppercase tracking-wider text-sm border border-radical-dark/30 dark:border-radical-light/30 hover:border-radical-primary-light dark:hover:border-radical-primary-DEFAULT hover:bg-radical-primary-light/5 dark:hover:bg-radical-primary-DEFAULT/5 transition-colors duration-300"
-                  >
-                    Read my blog
-                  </Link>
-                </div>
-              </div>
+
+      {/* SVG Filters for destruction */}
+      <svg className="absolute w-0 h-0">
+        <defs>
+          <filter id="rough">
+            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+          <filter id="heavy-rough">
+            <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="4" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+        </defs>
+      </svg>
+
+      {/* BRUTAL HERO */}
+      <section className="brutal-hero brutal-scanlines relative h-screen">
+        {/* Background image (dimmed) */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url('/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_rock_clim_515fa093-24e8-417a-aba9-46dd3d04f23e.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'grayscale(100%) contrast(1.1)',
+            opacity: 0.3
+          }}
+        />
+
+        {/* h1 is SAME SIZE as section, text positioned at bottom via padding */}
+        <h1
+          className="absolute inset-0 brutal-title flex items-end px-4 pb-52"
+          style={{
+            backgroundImage: "url('/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_rock_clim_515fa093-24e8-417a-aba9-46dd3d04f23e.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            WebkitBackgroundClip: 'text',
+            backgroundClip: 'text',
+            color: 'transparent',
+            filter: 'grayscale(100%) contrast(1.4) brightness(1.3)',
+            WebkitTextStroke: '3px var(--brutal-bone)'
+          }}
+        >
+          <span>MAX<br/>WALKER</span>
+        </h1>
+
+        {/* Content positioned at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 px-4 pb-8">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div className="max-w-lg">
+              <p className="text-[var(--brutal-bone)] text-sm md:text-base font-bold tracking-widest uppercase">
+                Engineer. Adventurer. Startup survivor. Global wanderer.
+              </p>
             </div>
 
-            <div className="relative">
-              
-              {/* Hero image */}
-              <div className="relative z-10 radical-border">
-                <PosterizedImage
-                  src="/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_rock_clim_515fa093-24e8-417a-aba9-46dd3d04f23e.png"
-                  alt="Rock climbing - seeking adventure"
-                  priority={true}
-                  className="w-full h-full"
-                />
-                <div className="absolute -top-3 -right-3 bg-radical-light dark:bg-radical-dark p-2 border border-radical-primary-light/50 dark:border-radical-primary-DEFAULT/50">
-                  <span className="font-mono text-xs uppercase text-radical-primary-light dark:text-radical-primary-DEFAULT">Type 2 Fun</span>
-                </div>
-                {/* Abstract graphic */}
-                <div className="absolute -top-10 -right-10 w-40 h-40 border border-radical-secondary-light/50 dark:border-radical-secondary-DEFAULT/50 opacity-30 z-0"></div>
-                <div className="absolute -bottom-10 -left-10 w-20 h-20 border border-radical-primary-light/50 dark:border-radical-primary-DEFAULT/50 opacity-30 z-0"></div>
-              </div>
+            {/* Links */}
+            <div className="flex gap-8 text-sm uppercase tracking-widest font-bold">
+              <Link
+                href="/about"
+                className="text-[var(--brutal-bone)] hover:text-[var(--brutal-red)] transition-colors"
+              >
+                About
+              </Link>
+              <Link
+                href="/blog"
+                className="text-[var(--brutal-bone)] hover:text-[var(--brutal-red)] transition-colors"
+              >
+                Writing
+              </Link>
             </div>
           </div>
         </div>
 
-        {/* Decorative elements */}
-        <div className="absolute top-40 left-1/3 w-5 h-5 bg-radical-primary-light dark:bg-radical-primary-DEFAULT animate-pulse-slow"></div>
-        <div className="hidden md:block absolute -bottom-10 right-10 rotate-45 font-mono text-xs tracking-wider text-radical-dark/30 dark:text-radical-light/30 uppercase">
-          Scroll down
-        </div>
       </section>
 
       {/* Who I Am section */}
