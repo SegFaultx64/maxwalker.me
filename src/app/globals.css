@@ -252,3 +252,155 @@ html {
     opacity: 1;
   }
 }
+
+/* BRUTAL PROSE - Blog content styling */
+.brutal-prose {
+  font-family: var(--font-brutal-mono);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: rgba(232, 228, 220, 0.85);
+}
+
+.brutal-prose h1,
+.brutal-prose h2,
+.brutal-prose h3,
+.brutal-prose h4 {
+  font-family: Impact, 'Arial Black', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--brutal-bone);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 0.95;
+}
+
+.brutal-prose h1 {
+  font-size: 2.5rem;
+}
+
+.brutal-prose h2 {
+  font-size: 1.875rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(232, 228, 220, 0.1);
+}
+
+.brutal-prose h3 {
+  font-size: 1.5rem;
+  color: var(--brutal-red);
+}
+
+.brutal-prose h4 {
+  font-size: 1.25rem;
+}
+
+.brutal-prose p {
+  margin-bottom: 1.25rem;
+}
+
+.brutal-prose a {
+  color: var(--brutal-red);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+
+.brutal-prose a:hover {
+  color: var(--brutal-bone);
+}
+
+.brutal-prose strong {
+  font-weight: 700;
+  color: var(--brutal-bone);
+}
+
+.brutal-prose em {
+  font-style: italic;
+}
+
+.brutal-prose ul,
+.brutal-prose ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.brutal-prose li {
+  margin-bottom: 0.5rem;
+}
+
+.brutal-prose ul li::marker {
+  color: var(--brutal-red);
+}
+
+.brutal-prose ol li::marker {
+  color: var(--brutal-red);
+  font-weight: 700;
+}
+
+.brutal-prose blockquote {
+  border-left: 3px solid var(--brutal-red);
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: rgba(232, 228, 220, 0.7);
+}
+
+.brutal-prose code {
+  font-family: var(--font-brutal-mono);
+  font-size: 0.875em;
+  background: rgba(232, 228, 220, 0.08);
+  padding: 0.2em 0.4em;
+  border-radius: 2px;
+  color: var(--brutal-bone);
+}
+
+.brutal-prose pre {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(232, 228, 220, 0.1);
+  padding: 1rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  font-size: 0.875rem;
+}
+
+.brutal-prose pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.brutal-prose hr {
+  border: none;
+  height: 1px;
+  background: rgba(232, 228, 220, 0.1);
+  margin: 2rem 0;
+}
+
+.brutal-prose img {
+  max-width: 100%;
+  height: auto;
+  filter: grayscale(100%) contrast(1.2);
+  margin: 1.5rem 0;
+}
+
+.brutal-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+}
+
+.brutal-prose th,
+.brutal-prose td {
+  border: 1px solid rgba(232, 228, 220, 0.1);
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.brutal-prose th {
+  background: rgba(232, 228, 220, 0.05);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--brutal-bone);
+}

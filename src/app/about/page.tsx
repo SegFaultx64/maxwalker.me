@@ -57,9 +57,10 @@ export default function AboutPage() {
               </p>
               <Link
                 href="/blog"
-                className="font-mono text-sm uppercase tracking-widest text-[var(--brutal-red)] hover:text-[var(--brutal-bone)] transition-colors"
+                className="group inline-flex items-center gap-3 font-mono text-sm uppercase tracking-widest"
               >
-                Read my writing →
+                <span className="text-[var(--brutal-red)] group-hover:text-[var(--brutal-bone)] transition-colors">Read my writing</span>
+                <span className="w-6 h-px bg-[var(--brutal-red)] group-hover:w-10 transition-all"></span>
               </Link>
             </div>
           </div>
@@ -90,22 +91,28 @@ export default function AboutPage() {
             </h2>
 
             <div className="space-y-6">
-              <div>
-                <h3 className="text-xl font-black text-[var(--brutal-red)] uppercase tracking-tight mb-2" style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}>The Restoration</h3>
-                <p className="font-mono text-xs text-[var(--brutal-bone)]/60">
+              <div className="group">
+                <h3 className="text-xl font-black text-[var(--brutal-red)] uppercase tracking-tight mb-2 inline-flex items-center gap-2" style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}>
+                  <span className="w-0 h-px bg-[var(--brutal-red)] group-hover:w-4 transition-all"></span>
+                  The Restoration
+                </h3>
+                <p className="font-mono text-xs text-[var(--brutal-bone)]/60 group-hover:text-[var(--brutal-bone)]/80 transition-colors">
                   At the start of COVID, we bought a ruined 1963 Airstream Overlander—just a frame and shell after decades of neglect in an Iowa field. I bought an ebook about DIY restoration, but got as far as "lift the shell with a gantry" before realizing I might accidentally kill myself.
                 </p>
-                <p className="font-mono text-xs text-[var(--brutal-bone)]/60 mt-2">
+                <p className="font-mono text-xs text-[var(--brutal-bone)]/60 group-hover:text-[var(--brutal-bone)]/80 transition-colors mt-2">
                   We found amazing craftspeople in Ohio who did most of the work while we FaceTimed and exchanged images throughout lockdown. When it was ready, we picked it up having never towed anything before in our lives.
                 </p>
               </div>
 
-              <div>
-                <h3 className="text-xl font-black text-[var(--brutal-bone)] uppercase tracking-tight mb-2" style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}>The Grand Tour</h3>
-                <p className="font-mono text-xs text-[var(--brutal-bone)]/60">
+              <div className="group">
+                <h3 className="text-xl font-black text-[var(--brutal-bone)] group-hover:text-[var(--brutal-red)] uppercase tracking-tight mb-2 inline-flex items-center gap-2 transition-colors" style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}>
+                  <span className="w-0 h-px bg-[var(--brutal-red)] group-hover:w-4 transition-all"></span>
+                  The Grand Tour
+                </h3>
+                <p className="font-mono text-xs text-[var(--brutal-bone)]/60 group-hover:text-[var(--brutal-bone)]/80 transition-colors">
                   We set out on an absurdly ambitious first trip with zero experience—all the way to Wyoming and Colorado. We dragged it up forest roads in the Tetons (freaking out the rangers), and narrowly escaped both wildfires and unexpected snow in Estes Park before racing back east.
                 </p>
-                <p className="font-mono text-xs text-[var(--brutal-bone)]/60 mt-2">
+                <p className="font-mono text-xs text-[var(--brutal-bone)]/60 group-hover:text-[var(--brutal-bone)]/80 transition-colors mt-2">
                   The next spring, we embarked on an even bigger journey: 38 states, 5 Canadian provinces, with our surprisingly adaptable cat in tow. We crossed Canada the day the border reopened, fell in love with Chelan County, WA, and ended up buying acres of wild land nearby.
                 </p>
               </div>
@@ -131,21 +138,25 @@ export default function AboutPage() {
             </div>
 
             <ul className="space-y-3 font-mono text-sm text-[var(--brutal-bone)]/70">
-              <li className="flex items-baseline">
+              <li className="group flex items-baseline cursor-default">
                 <span className="text-[var(--brutal-red)] mr-3 font-bold">01.</span>
-                <span>Most startup code will be thrown away. Plan accordingly.</span>
+                <span className="w-0 h-px bg-[var(--brutal-red)] group-hover:w-3 mr-0 group-hover:mr-2 transition-all"></span>
+                <span className="group-hover:text-[var(--brutal-bone)] transition-colors">Most startup code will be thrown away. Plan accordingly.</span>
               </li>
-              <li className="flex items-baseline">
+              <li className="group flex items-baseline cursor-default">
                 <span className="text-[var(--brutal-red)] mr-3 font-bold">02.</span>
-                <span>Code quality matters, but code is just a tool—business impact is the goal.</span>
+                <span className="w-0 h-px bg-[var(--brutal-red)] group-hover:w-3 mr-0 group-hover:mr-2 transition-all"></span>
+                <span className="group-hover:text-[var(--brutal-bone)] transition-colors">Code quality matters, but code is just a tool—business impact is the goal.</span>
               </li>
-              <li className="flex items-baseline">
+              <li className="group flex items-baseline cursor-default">
                 <span className="text-[var(--brutal-red)] mr-3 font-bold">03.</span>
-                <span>Know when to push through challenges, but also when to turn back.</span>
+                <span className="w-0 h-px bg-[var(--brutal-red)] group-hover:w-3 mr-0 group-hover:mr-2 transition-all"></span>
+                <span className="group-hover:text-[var(--brutal-bone)] transition-colors">Know when to push through challenges, but also when to turn back.</span>
               </li>
-              <li className="flex items-baseline">
+              <li className="group flex items-baseline cursor-default">
                 <span className="text-[var(--brutal-red)] mr-3 font-bold">04.</span>
-                <span>Remember you chose this path when things get tough.</span>
+                <span className="w-0 h-px bg-[var(--brutal-red)] group-hover:w-3 mr-0 group-hover:mr-2 transition-all"></span>
+                <span className="group-hover:text-[var(--brutal-bone)] transition-colors">Remember you chose this path when things get tough.</span>
               </li>
             </ul>
           </div>
@@ -179,13 +190,13 @@ export default function AboutPage() {
         <div className="relative grid grid-cols-1 md:grid-cols-[1fr_200px] gap-8">
           {/* Quotes */}
           <div className="space-y-6">
-            <div className="flex gap-4">
-              <div className="shrink-0 w-12 h-12 border border-[var(--brutal-red)] flex items-center justify-center">
-                <span className="text-[var(--brutal-red)] font-mono text-lg font-bold">01</span>
+            <div className="group flex gap-4 cursor-default">
+              <div className="shrink-0 w-12 h-12 border border-[var(--brutal-red)] flex items-center justify-center group-hover:bg-[var(--brutal-red)] transition-colors">
+                <span className="text-[var(--brutal-red)] group-hover:text-black font-mono text-lg font-bold transition-colors">01</span>
               </div>
               <div>
                 <h3 className="font-mono text-xs text-[var(--brutal-red)] uppercase tracking-widest mb-2">On suffering</h3>
-                <p className="font-mono text-sm text-[var(--brutal-bone)]/80 italic leading-relaxed">
+                <p className="font-mono text-sm text-[var(--brutal-bone)]/80 group-hover:text-[var(--brutal-bone)] italic leading-relaxed transition-colors">
                   "There are going to be times when you are not having fun, a lot of them. It's important to remember as a founder that you chose to be here and that often the things that suck in the moment will fade away but the other pieces will stay."
                 </p>
               </div>
@@ -193,13 +204,13 @@ export default function AboutPage() {
 
             <div className="h-px bg-[var(--brutal-bone)]/10 ml-16"></div>
 
-            <div className="flex gap-4">
-              <div className="shrink-0 w-12 h-12 border border-[var(--brutal-bone)]/30 flex items-center justify-center">
-                <span className="text-[var(--brutal-bone)]/50 font-mono text-lg font-bold">02</span>
+            <div className="group flex gap-4 cursor-default">
+              <div className="shrink-0 w-12 h-12 border border-[var(--brutal-bone)]/30 group-hover:border-[var(--brutal-red)] flex items-center justify-center transition-colors">
+                <span className="text-[var(--brutal-bone)]/50 group-hover:text-[var(--brutal-red)] font-mono text-lg font-bold transition-colors">02</span>
               </div>
               <div>
-                <h3 className="font-mono text-xs text-[var(--brutal-bone)]/50 uppercase tracking-widest mb-2">On turning back</h3>
-                <p className="font-mono text-sm text-[var(--brutal-bone)]/80 italic leading-relaxed">
+                <h3 className="font-mono text-xs text-[var(--brutal-bone)]/50 group-hover:text-[var(--brutal-red)] uppercase tracking-widest mb-2 transition-colors">On turning back</h3>
+                <p className="font-mono text-sm text-[var(--brutal-bone)]/80 group-hover:text-[var(--brutal-bone)] italic leading-relaxed transition-colors">
                   "It's very important to understand when to turn back. You can turn a slight mess into a life-threatening disaster in the mountains by pushing forward when you should have called it. The same is basically true with startups—there are times to cut and run, and you're only making it worse if you double down in these moments."
                 </p>
               </div>

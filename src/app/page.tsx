@@ -66,14 +66,16 @@ export default function Home() {
             <div className="flex gap-8 text-sm uppercase tracking-widest font-bold">
               <Link
                 href="/about"
-                className="text-[var(--brutal-bone)] hover:text-[var(--brutal-red)] transition-colors"
+                className="group inline-flex items-center gap-2 text-[var(--brutal-bone)] hover:text-[var(--brutal-red)] transition-colors"
               >
+                <span className="w-0 h-px bg-[var(--brutal-red)] group-hover:w-4 transition-all"></span>
                 About
               </Link>
               <Link
                 href="/blog"
-                className="text-[var(--brutal-bone)] hover:text-[var(--brutal-red)] transition-colors"
+                className="group inline-flex items-center gap-2 text-[var(--brutal-bone)] hover:text-[var(--brutal-red)] transition-colors"
               >
+                <span className="w-0 h-px bg-[var(--brutal-red)] group-hover:w-4 transition-all"></span>
                 Writing
               </Link>
             </div>
@@ -224,12 +226,14 @@ export default function Home() {
             I&apos;m always up for a conversation about technical challenges, startup ideas, Airstream renovations, or recommendations for trails and treks around the world.
           </p>
           <div className="mt-8 flex justify-center gap-6 font-mono text-sm uppercase tracking-widest">
-            <Link href="mailto:max@maxwellwalker.com" className="text-[var(--brutal-red)] hover:text-[var(--brutal-bone)] transition-colors">
-              Email Me
+            <Link href="mailto:max@maxwellwalker.com" className="group inline-flex items-center gap-3">
+              <span className="text-[var(--brutal-red)] group-hover:text-[var(--brutal-bone)] transition-colors">Email Me</span>
+              <span className="w-6 h-px bg-[var(--brutal-red)] group-hover:w-10 transition-all"></span>
             </Link>
             <span className="text-[var(--brutal-bone)]/30">/</span>
-            <Link href="/blog" className="text-[var(--brutal-bone)] hover:text-[var(--brutal-red)] transition-colors">
-              Read my thoughts
+            <Link href="/blog" className="group inline-flex items-center gap-3">
+              <span className="w-6 h-px bg-[var(--brutal-bone)]/50 group-hover:w-10 group-hover:bg-[var(--brutal-red)] transition-all"></span>
+              <span className="text-[var(--brutal-bone)] group-hover:text-[var(--brutal-red)] transition-colors">Read my thoughts</span>
             </Link>
           </div>
         </div>
