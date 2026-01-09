@@ -125,7 +125,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       </section>
 
       {/* NetDeck card tooltip embeds */}
-      <Script src="https://netdeck.gg/embed.js" strategy="lazyOnload" />
+      <Script src="https://app.netdeck.gg/embed.js" strategy="lazyOnload" />
       <Script id="netdeck-init" strategy="lazyOnload">
         {`if (typeof NetDeck !== 'undefined') { NetDeck.init({ game: 'vibes' }); }`}
       </Script>
