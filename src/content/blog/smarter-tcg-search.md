@@ -40,7 +40,7 @@ That third layer is where it gets interesting.
 
 Here's the thing about card games: the most useful search criteria often aren't explicit on the card. They're emergent properties that require actually understanding how the game works.
 
-Take "cards that draw cards" in Vibes. Some cards literally say "draw a card." Easy. But others say "look at the top 3 cards of your deck, put one in your hand." That's card advantage too, but a naive text search for "draw" won't find it. And what about cards that let you play things from your discard pile? That's *also* card advantage, in a different way. What about a card that makes your opponent discard? That's card advantage in the sense that it's a two-for-one, but it's doing something strategically very different from the first three examples.
+Take "cards that draw cards" in Vibes. Some cards literally say "draw a card"—[[Have an Encore]] is a perfect example. Easy. But others like [[Keyturning Penguin]] say "look at the top card of your deck, put it on the bottom." That's card *selection*, not card draw—a naive text search for "draw" won't find it, but it's still card advantage in a different form. And what about [[Lil Who Breaks Free]], which draws a card when it *leaves* the huddle? That's conditional draw that requires understanding the game's mechanics. What about a card that makes your opponent discard? That's card advantage in the sense that it's a two-for-one, but it's doing something strategically very different from the first three examples.
 
 What players actually want is to search by **strategic role**: "show me cards that generate card advantage." But that concept doesn't exist anywhere in the card data—it's emergent from understanding how the game works. You basically need a card game expert to look at every card and tag it with what that card is *for*. So I taught an AI to understand how the game works.
 
@@ -48,7 +48,7 @@ What players actually want is to search by **strategic role**: "show me cards th
 
 Before you can tag cards with roles, you need to define what roles exist. This is the part that can't be automated—you need someone who actually *gets* the game to think carefully about what strategic concepts matter. I came up with 22 roles across 8 categories for Vibes:
 
-- **Interaction**: removal, board clears, relic destruction, counterspells, discard
+- **Interaction**: removal (like [[Peace Out Penguin]] and [[Popcorn Penguin]]), board clears (like [[Yum Yum]]), relic destruction, counterspells, discard
 - **Card Advantage**: draw effects, card selection (scry/filter), tutors
 - **Resource**: pudge fixing, fishsicle generation, fishsicle synergies
 - **Recursion**: playing from the ice (graveyard), returning cards from ice
@@ -203,3 +203,5 @@ Separating these stages has real benefits:
 ## Try It
 
 The search is live on NetDeck for both [Vibes](https://app.netdeck.gg/cards/vibes) and [Flesh and Blood](https://app.netdeck.gg/cards/fab). Type a natural language query or dive into the syntax—the help panel documents everything.
+
+For example, searching `c:red role:removal` returns cards like [[Peace Out Penguin]], [[Popcorn Penguin]], [[Lil Daydreamer]], and [[Squibblestone the Wise]]—all red cards that can remove opposing penguins from play, even though they each do it in completely different ways. That's the power of semantic role tagging: you describe *what you want the card to do*, and the system finds cards that accomplish that goal regardless of how the rules text is worded.

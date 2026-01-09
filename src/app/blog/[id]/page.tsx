@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Script from 'next/script';
 import { getBlogPostData, getBlogPostIds } from '../../../lib/markdown';
 import CrtFilters from '../../../components/CrtFilters';
 import { img } from '../../../lib/images';
@@ -66,10 +67,10 @@ export default async function BlogPostPage({ params }: PageProps) {
 
             {/* Title */}
             <h1
-              className="text-[10vw] md:text-[5vw] font-black text-[var(--brutal-bone)] uppercase leading-[0.85] tracking-tighter"
+              className="text-[8vw] md:text-[4vw] font-black text-[var(--brutal-bone)] uppercase leading-[0.85] tracking-tighter"
               style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}
             >
-              {post.shortTitle || post.title}
+              {post.title}
             </h1>
 
             <div className="h-px w-24 bg-[var(--brutal-red)] mt-6"></div>
@@ -122,6 +123,12 @@ export default async function BlogPostPage({ params }: PageProps) {
           </Link>
         </div>
       </section>
+
+      {/* NetDeck card tooltip embeds */}
+      <Script src="https://netdeck.gg/embed.js" strategy="lazyOnload" />
+      <Script id="netdeck-init" strategy="lazyOnload">
+        {`if (typeof NetDeck !== 'undefined') { NetDeck.init({ game: 'vibes' }); }`}
+      </Script>
     </div>
   );
 }
