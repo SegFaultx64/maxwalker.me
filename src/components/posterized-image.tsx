@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { img } from '../lib/images';
 
 type PosterizedImageProps = {
   src: string;
@@ -28,6 +29,7 @@ export default function PosterizedImage({
   aspectRatio = '1/1',
   objectPosition = 'center',
 }: PosterizedImageProps) {
+  const imageSrc = img(src);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -59,7 +61,7 @@ export default function PosterizedImage({
     >
       <div className='scale-110 bg-radical-light dark:bg-radical-dark'>
         <Image
-          src={src}
+          src={imageSrc}
           alt={alt}
           fill={false}
           width={1200}

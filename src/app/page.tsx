@@ -215,14 +215,14 @@ export default function Home() {
       <section className="relative bg-black min-h-[50vh] flex items-center justify-center">
         {/* Background image */}
         <Image
-          src="/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_vintage_34536eee-ac07-480c-a940-475fa5efcc09_1.png"
+          src={img("/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_vintage_34536eee-ac07-480c-a940-475fa5efcc09_1.png")}
           alt="Vintage tech"
           fill
           className="object-cover grayscale contrast-125 opacity-30"
         />
         {/* Content */}
         <div className="relative text-center px-4 py-16">
-          <h2 className="text-[12vw] md:text-[8vw] font-black text-white uppercase leading-[0.85] tracking-tighter mix-blend-difference" style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white uppercase leading-[0.85] tracking-tighter mix-blend-difference" style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}>
             Want to talk about code, travel, or building things?
           </h2>
           <p className="font-mono text-sm text-[var(--brutal-bone)]/60 mt-6 max-w-xl mx-auto">
