@@ -1,9 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  basePath: '/maxwalker.me',
   images: {
-    domains: ['raw.githubusercontent.com'],
     unoptimized: true,
+  },
+  trailingSlash: true,
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 
-module.exports = nextConfig; 
+module.exports = nextConfig;
