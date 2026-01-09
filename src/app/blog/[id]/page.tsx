@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import Script from 'next/script';
 import { getBlogPostData, getBlogPostIds } from '../../../lib/markdown';
 import CrtFilters from '../../../components/CrtFilters';
+import NetDeckEmbed from '../../../components/NetDeckEmbed';
 import { img } from '../../../lib/images';
 
 const heroImage = '/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_tblisi__4cf631cc-109f-4399-a1ae-3f1538a6cfd3_0.png';
@@ -125,10 +125,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       </section>
 
       {/* NetDeck card tooltip embeds */}
-      <Script src="https://app.netdeck.gg/embed.js" strategy="lazyOnload" />
-      <Script id="netdeck-init" strategy="lazyOnload">
-        {`if (typeof NetDeck !== 'undefined') { NetDeck.init({ game: 'vibes' }); }`}
-      </Script>
+      <NetDeckEmbed game="vibes" />
     </div>
   );
 }
