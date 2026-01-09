@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import { getBlogPostData, getBlogPostIds } from '../../../lib/markdown';
 import CrtFilters from '../../../components/CrtFilters';
+import { img } from '../../../lib/images';
+
+const heroImage = '/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_tblisi__4cf631cc-109f-4399-a1ae-3f1538a6cfd3_0.png';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -34,7 +37,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: "url('/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_tblisi__4cf631cc-109f-4399-a1ae-3f1538a6cfd3_0.png')",
+            backgroundImage: `url('${img(heroImage)}')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             filter: 'grayscale(100%) contrast(1.1)',

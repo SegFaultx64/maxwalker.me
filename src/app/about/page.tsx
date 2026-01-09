@@ -2,6 +2,9 @@ import Link from 'next/link';
 import PosterizedImage from '../../components/posterized-image';
 import GlobeDemo from '../../components/GlobeDemo';
 import CrtFilters from '../../components/CrtFilters';
+import { img } from '../../lib/images';
+
+const heroImage = '/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_abandon_01880443-fc44-4d8f-832a-91fe0d06ad45_0.png';
 
 export default function AboutPage() {
   return (
@@ -14,7 +17,7 @@ export default function AboutPage() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: "url('/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_abandon_01880443-fc44-4d8f-832a-91fe0d06ad45_0.png')",
+            backgroundImage: `url('${img(heroImage)}')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             filter: 'grayscale(100%) contrast(1.1)',
@@ -26,7 +29,7 @@ export default function AboutPage() {
         <h1
           className="absolute inset-0 brutal-title flex items-end px-4 pb-72 md:pb-64"
           style={{
-            backgroundImage: "url('/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_abandon_01880443-fc44-4d8f-832a-91fe0d06ad45_0.png')",
+            backgroundImage: `url('${img(heroImage)}')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             WebkitBackgroundClip: 'text',

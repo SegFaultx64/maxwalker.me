@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import { getAllBlogPosts } from '../../lib/markdown';
 import CrtFilters from '../../components/CrtFilters';
+import { img } from '../../lib/images';
 
 export const metadata = {
   title: 'Blog',
   description: 'Writing on engineering, startups, and adventure.'
 };
+
+const heroImage = '/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_vintage_34536eee-ac07-480c-a940-475fa5efcc09_1.png';
 
 export default async function BlogIndexPage() {
   const posts = await getAllBlogPosts();
@@ -20,7 +23,7 @@ export default async function BlogIndexPage() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: "url('/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_vintage_34536eee-ac07-480c-a940-475fa5efcc09_1.png')",
+            backgroundImage: `url('${img(heroImage)}')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             filter: 'grayscale(100%) contrast(1.1)',
@@ -32,7 +35,7 @@ export default async function BlogIndexPage() {
         <h1
           className="absolute inset-0 brutal-title flex items-end px-4 pb-72 md:pb-64"
           style={{
-            backgroundImage: "url('/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_vintage_34536eee-ac07-480c-a940-475fa5efcc09_1.png')",
+            backgroundImage: `url('${img(heroImage)}')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             WebkitBackgroundClip: 'text',

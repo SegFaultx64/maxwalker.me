@@ -2,6 +2,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import PosterizedImage from '../components/posterized-image';
 import CrtFilters from '../components/CrtFilters';
+import { img } from '../lib/images';
+
+const heroImage = '/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_rock_clim_515fa093-24e8-417a-aba9-46dd3d04f23e.png';
 
 export default function Home() {
   return (
@@ -28,7 +31,7 @@ export default function Home() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: "url('/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_rock_clim_515fa093-24e8-417a-aba9-46dd3d04f23e.png')",
+            backgroundImage: `url('${img(heroImage)}')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             filter: 'grayscale(100%) contrast(1.1)',
@@ -40,7 +43,7 @@ export default function Home() {
         <h1
           className="absolute inset-0 brutal-title flex items-end px-4 pb-52"
           style={{
-            backgroundImage: "url('/images_for_use/u3894594211_edgy_graphic_design_monochrome_posterized_rock_clim_515fa093-24e8-417a-aba9-46dd3d04f23e.png')",
+            backgroundImage: `url('${img(heroImage)}')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             WebkitBackgroundClip: 'text',

@@ -2,7 +2,7 @@
 title: "Towards Smarter TCG Card Search"
 date: "2026-01-08"
 excerpt: "Building a card search that understands natural language and strategic concepts. How I combined LLM translation, a custom query language, and AI-generated role tagging to let players search for 'red penguins that make fishsicles.'"
-shortTitle: "Smarter TCG Card Search"
+shortTitle: "Towards Smarter TCG Card Search"
 ---
 
 When you're searching for cards in a trading card game, you usually have two options: click through a maze of dropdown filters, or learn some arcane query syntax that looks like it escaped from a SQL textbook. Neither is great.
